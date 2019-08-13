@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5uK-JG-sJK">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Content Data Load View-->
+        <scene sceneID="iEt-bU-rha">
+            <objects>
+                <viewController id="5uK-JG-sJK" customClass="ContentDataLoadView" customModule="App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pmc-na-PB1">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="被加载的内容载的内容被加载的内容载的内容" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jys-xS-h6O">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="3b8-Eu-uOP" firstAttribute="trailing" secondItem="Jys-xS-h6O" secondAttribute="trailing" id="0Kx-eT-7KV"/>
+                            <constraint firstItem="Jys-xS-h6O" firstAttribute="leading" secondItem="3b8-Eu-uOP" secondAttribute="leading" id="TsC-o5-wjJ"/>
+                            <constraint firstItem="3b8-Eu-uOP" firstAttribute="bottom" secondItem="Jys-xS-h6O" secondAttribute="bottom" id="Wje-Wq-hJi"/>
+                            <constraint firstItem="Jys-xS-h6O" firstAttribute="top" secondItem="3b8-Eu-uOP" secondAttribute="top" id="wUs-kZ-pBv"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="3b8-Eu-uOP"/>
+                    </view>
+                    <connections>
+                        <outlet property="contentLB" destination="Jys-xS-h6O" id="Wqo-o0-7Nx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xgc-W3-aqp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-345" y="-16"/>
+        </scene>
+    </scenes>
+</document>
