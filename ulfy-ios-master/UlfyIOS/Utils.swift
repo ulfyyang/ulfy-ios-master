@@ -16,7 +16,18 @@ public class TaskUtils {
 
 }
 
+import SnapKit
+
 public class UiUtils {
+
+    /// 将一个View填充到容器中，该容器中只会有一个View
+    public static func displayViewOnContainer(view: UIView, container: UIView) {
+        container.subviews.forEach { view in view.removeFromSuperview() }
+        container.addSubview(view)
+        view.snp.remakeConstraints { maker in
+            maker.size.equalTo(container)
+        }
+    }
 
     /// 根据View获取该View所属的ViewController
     /// - view      用于搜索的View

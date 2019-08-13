@@ -16,8 +16,14 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        TaskUtils.loadData(executeBody: vm.loadData(), transponder: ContentDataLoader(container: contentCV, model: vm))
+        initContent()
     }
 
+    func initContent() {
+        TaskUtils.loadData(executeBody: vm.loadData(), transponder: ContentDataLoader(container: contentCV, model: vm, showFirst: false).setOnReloadListener {
+            self.initContent()
+        })
+    }
+    
 }
 

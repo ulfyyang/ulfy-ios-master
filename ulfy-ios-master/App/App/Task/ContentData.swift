@@ -76,10 +76,8 @@ class ContentDataVM: IViewModel {
                     print("JSON: \(JSON)")
                 }
                 
-                sleep(2)
-                
                 self.content = "网络加载的内容"
-                task.notifySuccess(tipData: "加载结束..." as AnyObject)
+                task.notifyFail(tipData: "加载结束..." as AnyObject)
             }
         }
     }

@@ -165,8 +165,8 @@ class Message {
     static let TYPE_FAIL = 4;                       // 任务失败
     static let TYPE_UPDATE = 5;                     // 更新任务
     static let TYPE_FINISH = 6;                     // 任务结束
-    var type: Int         // 消息的类型
-    var data: Any         // 消息携带的内容
+    final var type: Int         // 消息的类型
+    final var data: Any         // 消息携带的内容
 
     /// 构造方法
     init(type: Int, data: Any) {
@@ -179,7 +179,7 @@ class Message {
 public class Transponder {
 
     /// 当任务发布消息的时候调用该方法
-    func onTranspondMessage(message: Message) -> Void {
+    final func onTranspondMessage(message: Message) -> Void {
         switch message.type {
         case Message.TYPE_NO_NET_CONNECTION:
             onNoNetConnection(data: message.data);
@@ -225,39 +225,79 @@ public class Transponder {
 
 import SnapKit
 
+/// 内容加载器，该加载器会在页面的指定位置上进行操作
 public class ContentDataLoader : Transponder {
-    var container: UIView                                       // 执行过程中操作的容器
-    var model: IViewModel                                       // 当任务执行成功后使用的数据模型
-    var contentDataLoadingView: ContentDataLoadingView          // 加载中动画显示
+    private var container: UIView                                       // 执行过程中操作的容器
+    private var model: IViewModel                                       // 当任务执行成功后使用的数据模型
+    private var view: UIView?                                           // 执行成功后保留的View，保留是为了尽可能的复用
+    private var showFirst: Bool                                         // 是否有限显示出来
+    private var contentDataLoaderConfig: ContentDataLoaderConfig        // 表现配置
+    private var onReload: (() -> Void)?                                 // 点击重试执行的操作
 
-    public init(container: UIView, model: IViewModel) {
+    public init(container: UIView, model: IViewModel, showFirst: Bool) {
         self.container = container
         self.model = model
-        self.contentDataLoadingView = ContentDataLoadingView()
+        self.showFirst = showFirst
+        self.contentDataLoaderConfig = UlfyConfig.TransponderConfig.contentDataLoaderConfig
+        super.init()
+        if (showFirst) {
+            view = model.getGetViewType().init()
+            onCreateView(loader: self, createdView: view!)
+            UiUtils.displayViewOnContainer(view: view!, container: container)
+        }
+    }
+
+    public final func setContentDataLoaderConfig(contentDataLoaderConfig: ContentDataLoaderConfig) -> ContentDataLoader {
+        self.contentDataLoaderConfig = contentDataLoaderConfig
+        return self
+    }
+
+    override func onNetError(data: Any) {
+        let netErrorView: ReloadView = contentDataLoaderConfig.getNetErrorView()
+        netErrorView.setOnReloadListener(onReload: onReload)
+        if (netErrorView is TipView) {
+            (netErrorView as! TipView).setTipMessage(message: data)
+        }
+        UiUtils.displayViewOnContainer(view: netErrorView as! UIView, container: container)
     }
 
     override func onStart(data: Any) {
-        container.addSubview(contentDataLoadingView)
-        contentDataLoadingView.snp.remakeConstraints { make in
-            make.size.equalTo(container)
+        if (!showFirst) {
+            let loadingView: TipView = contentDataLoaderConfig.getLoadingView()
+            loadingView.setTipMessage(message: data)
+            UiUtils.displayViewOnContainer(view: loadingView as! UIView, container: container)
         }
-        contentDataLoadingView.setTipMessage(message: data)
     }
 
     override func onSuccess(data: Any) {
-        contentDataLoadingView.removeFromSuperview()
-        let modelView = model.getGetViewType().init()
-        container.addSubview(modelView)
-        modelView.snp.makeConstraints { (make) in
-            make.size.equalTo(container)
-        }
-        if (modelView is IView) {
-            (modelView as! IView).bind(model: model)
+        if (showFirst) {
+            (view as! IView).bind(model: model)
+        } else {
+            view = model.getGetViewType().init()
+            onCreateView(loader: self, createdView: view!)
+            UiUtils.displayViewOnContainer(view: view!, container: container)
         }
     }
 
     override func onFail(data: Any) {
-        contentDataLoadingView.removeFromSuperview()
+        let failView: ReloadView = contentDataLoaderConfig.getFailView()
+        failView.setOnReloadListener(onReload: onReload)
+        if (failView is TipView) {
+            (failView as! TipView).setTipMessage(message: data)
+        }
+        UiUtils.displayViewOnContainer(view: failView as! UIView, container: container)
+    }
+
+    public func onCreateView(loader: ContentDataLoader, createdView: UIView) { }
+
+    public final func getView() -> UIView? {
+        return self.view
+    }
+    
+    /// 设置重试操作
+    public final func setOnReloadListener(onReload: (() -> Void)?) -> ContentDataLoader {
+        self.onReload = onReload
+        return self
     }
 }
 
@@ -298,7 +338,7 @@ public class LoadDataUiTask : UiTask {
     }
 
     /// 任务的执行方法实现
-    override func run() {
+    final override func run() {
         if (!isCancelUiHandler()) {
             if (executeBody == nil) {
                 notifySuccess(tipData: "加载完成")
@@ -309,27 +349,27 @@ public class LoadDataUiTask : UiTask {
     }
 
     /// 通知任务开始了
-    public func notifyStart(tipData: Any) -> Void {
+    public final func notifyStart(tipData: Any) -> Void {
         runOnUiThread {
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_START, data: tipData));
         }
     }
     /// 通知任务成功了
-    public func notifySuccess(tipData: Any) -> Void {
+    public final func notifySuccess(tipData: Any) -> Void {
         runOnUiThread {
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_SUCCESS, data: tipData));
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_FINISH, data: tipData));
         }
     }
     /// 通知任务失败了
-    func notifyFail(tipData: Any) -> Void {
+    public final func notifyFail(tipData: Any) -> Void {
         runOnUiThread {
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_FAIL, data: tipData));
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_FINISH, data: tipData));
         }
     }
     /// 通知任务更新了
-    func notifyUpdate(tipData: Any) -> Void {
+    public final func notifyUpdate(tipData: Any) -> Void {
         runOnUiThread {
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_UPDATE, data: tipData));
         }
