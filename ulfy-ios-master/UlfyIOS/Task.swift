@@ -301,31 +301,6 @@ public class ContentDataLoader : Transponder {
     }
 }
 
-public class PrintTransponder : Transponder {
-    public override init() {}
-    override func onNoNetConnection(data: Any) -> Void {
-        print(data)
-    }
-    override func onNetError(data: Any) -> Void {
-        print(data)
-    }
-    override func onStart(data: Any) -> Void {
-        print(data)
-    }
-    override func onSuccess(data: Any) -> Void {
-        print(data)
-    }
-    override func onFail(data: Any) -> Void {
-        print(data)
-    }
-    override func onUpdate(data: Any) -> Void {
-        print(data)
-    }
-    override func onFinish(data: Any) -> Void {
-        print(data)
-    }
-}
-
 /// 加载无状态数据的任务
 public class LoadDataUiTask : UiTask {
     var executeBody: ((LoadDataUiTask) -> Void)?        // 任务执行的执行体
