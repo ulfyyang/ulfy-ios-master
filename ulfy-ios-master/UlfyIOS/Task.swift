@@ -61,6 +61,11 @@ public class UiTask : Task {
     func setCancelUiHandler(cancelUiHandler: Bool) {
         self.cancelUiHandler = cancelUiHandler
     }
+
+    /// 是否取消UI操作
+    func isCancelUiHandler() -> Bool {
+        return self.cancelUiHandler
+    }
 }
 
 /// 任务执行器，用于执行一个任务。后期会扩展不同的执行器实现
@@ -294,7 +299,7 @@ public class LoadDataUiTask : UiTask {
 
     /// 任务的执行方法实现
     override func run() {
-        if (!cancelUiHandler) {
+        if (!isCancelUiHandler()) {
             if (executeBody == nil) {
                 notifySuccess(tipData: "加载完成")
             } else {
