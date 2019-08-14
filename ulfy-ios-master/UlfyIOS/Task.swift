@@ -176,7 +176,7 @@ class Message {
 }
 
 /// 响应器的最基本约定
-public class Transponder {
+open class Transponder {
 
     /// 当任务发布消息的时候调用该方法
     final func onTranspondMessage(message: Message) -> Void {

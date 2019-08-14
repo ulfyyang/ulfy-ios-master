@@ -3,7 +3,79 @@
 // Copyright (c) 2019 SparkUlfy. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import SnapKit
+
+class Dialog: UIView {
+    private var dialogId: String = DialogUtils.ULFY_MAIN_DIALOG_ID                // 弹出框的ID
+
+    public init(dialogId: String) {
+        self.dialogId = dialogId
+        super.init(frame: CGRect.zero)
+        self.backgroundColor = UIColor(white: 0.1, alpha: 0.6)
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
+    public func show() {
+        DialogRepository.instance.addDialog(dialog: self)
+        UIApplication.shared.keyWindow!.addSubview(self)
+        self.snp.remakeConstraints { maker in
+            maker.size.equalTo(UIApplication.shared.keyWindow!)
+        }
+    }
+    
+    public func dismiss() {
+        DialogRepository.instance.removeDialog(dialog: self)
+        self.removeFromSuperview()
+    }
+
+    func getDialogId() -> String {
+        return dialogId
+    }
+}
+
+class DialogRepository {
+    public static let instance = DialogRepository()
+    private var dialogDirectory:[String: Dialog] = [String: Dialog]()
+
+    func getDialogById(dialogId: String) -> Dialog {
+        return dialogDirectory[dialogId]!
+    }
+
+    func addDialog(dialog: Dialog) {
+        if (dialogDirectory[dialog.getDialogId()] != nil) {
+            let oldDialog =  dialogDirectory[dialog.getDialogId()]
+            if (oldDialog == dialog) {
+                return
+            } else {
+                oldDialog?.dismiss()
+            }
+        }
+        dialogDirectory[dialog.getDialogId()] = dialog
+    }
+
+    func removeDialog(dialog: Dialog) {
+        dialogDirectory.removeValue(forKey: dialog.getDialogId())
+    }
+}
+
+public class DialogUtils {
+    public static let ULFY_MAIN_DIALOG_ID = "__ULFY_MAIN_DIALOG_ID__"
+
+    public static func showDialog() {
+        Dialog(dialogId: ULFY_MAIN_DIALOG_ID).show()
+    }
+
+    public static func dismissDialog() {
+        let dialog = DialogRepository.instance.getDialogById(dialogId: ULFY_MAIN_DIALOG_ID)
+        if (dialog != nil) {
+            dialog.dismiss()
+        }
+    }
+}
 
 public class TaskUtils {
 

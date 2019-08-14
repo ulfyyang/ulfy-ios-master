@@ -21,7 +21,13 @@ class ContentDataView: BaseView {
     override func bind(model: IViewModel) {
         vm = model as? ContentDataVM
         contentLB.text = vm?.content
+
+        TaskUtils.loadData(executeBody: vm!.loadData(), transponder: DialogProcesser().setOnSuccess { processer in
+            print("处理完了")
+        })
     }
+
+
 }
 
 class ContentDataVM: IViewModel {
