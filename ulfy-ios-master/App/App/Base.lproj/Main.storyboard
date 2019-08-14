@@ -18,22 +18,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iSg-rq-gjd">
-                                <rect key="frame" x="87" y="319" width="240" height="213"/>
-                            </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y6o-kB-C8F">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WJr-Gn-AoO">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="Jyp-Dr-bcO"/>
+                                        </constraints>
+                                        <state key="normal" title="内容加载"/>
+                                        <connections>
+                                            <action selector="clickContentDataBT:" destination="BYZ-38-t0r" eventType="touchUpInside" id="r0M-CN-SmJ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="WJr-Gn-AoO" firstAttribute="top" secondItem="y6o-kB-C8F" secondAttribute="top" id="DAq-wd-5Kp"/>
+                                    <constraint firstItem="WJr-Gn-AoO" firstAttribute="leading" secondItem="y6o-kB-C8F" secondAttribute="leading" id="NpY-qn-bd0"/>
+                                    <constraint firstAttribute="trailing" secondItem="WJr-Gn-AoO" secondAttribute="trailing" id="vbZ-RH-GzQ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" name="selectedMenuItemTextColor" catalog="System" colorSpace="catalog"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="iSg-rq-gjd" secondAttribute="trailing" constant="87" id="EDQ-Uh-8Jm"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="iSg-rq-gjd" secondAttribute="bottom" constant="330" id="dJ0-vX-aSN"/>
-                            <constraint firstItem="iSg-rq-gjd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="275" id="nJi-lv-bc5"/>
-                            <constraint firstItem="iSg-rq-gjd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="87" id="trM-Fv-2PG"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="y6o-kB-C8F" secondAttribute="trailing" id="MyY-HZ-hwo"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="y6o-kB-C8F" secondAttribute="bottom" id="aNm-ko-0xz"/>
+                            <constraint firstItem="y6o-kB-C8F" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="g5b-42-z0b"/>
+                            <constraint firstItem="y6o-kB-C8F" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xq9-Rp-gQz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <connections>
-                        <outlet property="contentCV" destination="iSg-rq-gjd" id="ybo-hD-i34"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

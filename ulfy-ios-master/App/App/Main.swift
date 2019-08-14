@@ -11,19 +11,15 @@ import UlfyIOS
 import Alamofire
 
 class ViewController: UIViewController {
-    @IBOutlet var contentCV: UIView!
-    var vm: ContentDataVM = ContentDataVM()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        initContent()
-    }
-
-    func initContent() {
-        TaskUtils.loadData(executeBody: vm.loadData(), transponder: ContentDataLoader(container: contentCV, model: vm, showFirst: false).setOnReloadListener {
-            self.initContent()
-        })
     }
     
+    
+    @IBAction func clickContentDataBT(_ sender: UIButton) {
+        let controller = ContentDataController()
+        self.present(controller, animated: true, completion: nil)
+    }
 }
 

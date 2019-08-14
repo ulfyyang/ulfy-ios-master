@@ -5,6 +5,28 @@
 
 import UIKit
 import UlfyIOS
+import SnapKit
+
+class ContentDataController: UIViewController {
+    var vm: ContentDataVM = ContentDataVM()
+    let box: UIView = UIView()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        box.backgroundColor = UIColor.white
+        self.view.addSubview(box)
+        box.snp.makeConstraints { maker in
+            maker.size.equalToSuperview()
+        }
+        self.initContent()
+    }
+
+    func initContent() {
+        TaskUtils.loadData(executeBody: vm.loadData(), transponder: ContentDataLoader(container: self.box, model: vm, showFirst: false).setOnReloadListener {
+            self.initContent()
+        })
+    }
+}
 
 class ContentDataView: BaseView {
     @IBOutlet var contentLB: UILabel!
