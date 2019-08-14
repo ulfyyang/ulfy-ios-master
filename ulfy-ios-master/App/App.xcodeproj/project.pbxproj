@@ -7,20 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2CD637E249D03D0D928A0378 /* ContentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD63ABC4B9CE06431E6B87F /* ContentData.swift */; };
+		2CD63BFEB0EEE8C07A9A040A /* Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD639A40546F2376FCD1459 /* Base.swift */; };
+		9D1653832304059100799406 /* ContentDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D1653822304059100799406 /* ContentDataView.xib */; };
 		9D91C4A622FC7CFE00F0CE35 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D91C4A522FC7CFE00F0CE35 /* AppDelegate.swift */; };
 		9D91C4A822FC7CFE00F0CE35 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D91C4A722FC7CFE00F0CE35 /* Main.swift */; };
 		9D91C4AB22FC7CFE00F0CE35 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D91C4A922FC7CFE00F0CE35 /* Main.storyboard */; };
 		9D91C4AD22FC7CFF00F0CE35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D91C4AC22FC7CFF00F0CE35 /* Assets.xcassets */; };
 		9D91C4B022FC7CFF00F0CE35 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D91C4AE22FC7CFF00F0CE35 /* LaunchScreen.storyboard */; };
-		9D91C4F122FDB82D00F0CE35 /* ContentData.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D91C4F022FDB82D00F0CE35 /* ContentData.storyboard */; };
-		9D91C4F322FDB8AB00F0CE35 /* ContentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D91C4F222FDB8AB00F0CE35 /* ContentData.swift */; };
 		9D91C4F722FF141000F0CE35 /* UlfyIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D91C4F622FF141000F0CE35 /* UlfyIOS.framework */; };
 		DC78B083F740BE05804B7DBD /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 901474491A80FD206F118178 /* Pods_App.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2CD639A40546F2376FCD1459 /* Base.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base.swift; sourceTree = "<group>"; };
+		2CD63ABC4B9CE06431E6B87F /* ContentData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentData.swift; sourceTree = "<group>"; };
 		658A7E9BAD8FA7F495CC38B8 /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
 		901474491A80FD206F118178 /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D1653822304059100799406 /* ContentDataView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentDataView.xib; sourceTree = "<group>"; };
 		9D91C4A222FC7CFE00F0CE35 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D91C4A522FC7CFE00F0CE35 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D91C4A722FC7CFE00F0CE35 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
@@ -29,8 +33,6 @@
 		9D91C4AF22FC7CFF00F0CE35 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9D91C4B122FC7CFF00F0CE35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D91C4DB22FC83BA00F0CE35 /* UlfyIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UlfyIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D91C4F022FDB82D00F0CE35 /* ContentData.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContentData.storyboard; sourceTree = "<group>"; };
-		9D91C4F222FDB8AB00F0CE35 /* ContentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentData.swift; sourceTree = "<group>"; };
 		9D91C4F422FF113800F0CE35 /* UlfyIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UlfyIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D91C4F622FF141000F0CE35 /* UlfyIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UlfyIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB1474A9D526C151DE7ADA03 /* Pods-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.release.xcconfig"; path = "Target Support Files/Pods-App/Pods-App.release.xcconfig"; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				9D91C4AC22FC7CFF00F0CE35 /* Assets.xcassets */,
 				9D91C4AE22FC7CFF00F0CE35 /* LaunchScreen.storyboard */,
 				9D91C4B122FC7CFF00F0CE35 /* Info.plist */,
+				2CD639A40546F2376FCD1459 /* Base.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -105,8 +108,8 @@
 		9D91C4EF22FDB80C00F0CE35 /* Task */ = {
 			isa = PBXGroup;
 			children = (
-				9D91C4F022FDB82D00F0CE35 /* ContentData.storyboard */,
-				9D91C4F222FDB8AB00F0CE35 /* ContentData.swift */,
+				2CD63ABC4B9CE06431E6B87F /* ContentData.swift */,
+				9D1653822304059100799406 /* ContentDataView.xib */,
 			);
 			path = Task;
 			sourceTree = "<group>";
@@ -172,8 +175,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D91C4B022FC7CFF00F0CE35 /* LaunchScreen.storyboard in Resources */,
+				9D1653832304059100799406 /* ContentDataView.xib in Resources */,
 				9D91C4AD22FC7CFF00F0CE35 /* Assets.xcassets in Resources */,
-				9D91C4F122FDB82D00F0CE35 /* ContentData.storyboard in Resources */,
 				9D91C4AB22FC7CFE00F0CE35 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -229,7 +232,8 @@
 			files = (
 				9D91C4A822FC7CFE00F0CE35 /* Main.swift in Sources */,
 				9D91C4A622FC7CFE00F0CE35 /* AppDelegate.swift in Sources */,
-				9D91C4F322FDB8AB00F0CE35 /* ContentData.swift in Sources */,
+				2CD63BFEB0EEE8C07A9A040A /* Base.swift in Sources */,
+				2CD637E249D03D0D928A0378 /* ContentData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

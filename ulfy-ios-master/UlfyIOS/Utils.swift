@@ -29,6 +29,19 @@ public class UiUtils {
         }
     }
 
+    /// 将和该View关联的Nib填充到该View中
+    public static func inflateNibToUIView(uiView: UIView) {
+        // 获取View类名对应的Nib文件View
+        let className = type(of: uiView)
+        let nib = UINib(nibName: NSStringFromClass(className).components(separatedBy: ".").last!, bundle: Bundle(for: className))
+        let nibView = nib.instantiate(withOwner: uiView, options: nil).first as! UIView
+        // 填充到容器中
+        uiView.addSubview(nibView)
+        nibView.snp.makeConstraints { maker in
+            maker.size.equalTo(uiView)
+        }
+    }
+
     /// 根据View获取该View所属的ViewController
     /// - view      用于搜索的View
     /// - type      用于搜索的ViewController类型

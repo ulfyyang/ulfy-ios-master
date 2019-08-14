@@ -1,5 +1,5 @@
 //
-//  Loading.swift
+//  Loader.swift
 //  App
 //
 //  Created by 123 on 2019/8/9.

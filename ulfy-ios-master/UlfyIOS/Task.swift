@@ -275,6 +275,7 @@ public class ContentDataLoader : Transponder {
         } else {
             view = model.getGetViewType().init()
             onCreateView(loader: self, createdView: view!)
+            (view as! IView).bind(model: model)
             UiUtils.displayViewOnContainer(view: view!, container: container)
         }
     }
@@ -303,8 +304,8 @@ public class ContentDataLoader : Transponder {
 
 /// 加载无状态数据的任务
 public class LoadDataUiTask : UiTask {
-    var executeBody: ((LoadDataUiTask) -> Void)?        // 任务执行的执行体
-    var transponder: Transponder                        // 任务执行的响应器
+    private var executeBody: ((LoadDataUiTask) -> Void)?        // 任务执行的执行体
+    private var transponder: Transponder                        // 任务执行的响应器
 
     /// 构造方法，需要任务的执行体和对应的响应器
     public init(executeBody: ((LoadDataUiTask) -> Void)?, transponder: Transponder) {
@@ -348,6 +349,10 @@ public class LoadDataUiTask : UiTask {
         runOnUiThread {
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_UPDATE, data: tipData));
         }
+    }
+    
+    public func setExecuteBody(executeBody: ((LoadDataUiTask) -> Void)?) {
+        self.executeBody = executeBody
     }
 }
 
