@@ -22,30 +22,43 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WJr-Gn-AoO">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="Jyp-Dr-bcO"/>
+                                            <constraint firstAttribute="height" constant="50" id="2w4-JX-Ndt"/>
                                         </constraints>
                                         <state key="normal" title="内容加载"/>
                                         <connections>
-                                            <action selector="clickContentDataBT:" destination="BYZ-38-t0r" eventType="touchUpInside" id="r0M-CN-SmJ"/>
+                                            <action selector="clickContentDataBT:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kcv-Cf-AXr"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BY9-xG-Wcc">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="vtp-IX-W2f"/>
+                                        </constraints>
+                                        <state key="normal" title="列表展示"/>
+                                        <connections>
+                                            <action selector="clickTableViewBT:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Z0H-zz-2OI"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="WJr-Gn-AoO" firstAttribute="top" secondItem="y6o-kB-C8F" secondAttribute="top" id="DAq-wd-5Kp"/>
-                                    <constraint firstItem="WJr-Gn-AoO" firstAttribute="leading" secondItem="y6o-kB-C8F" secondAttribute="leading" id="NpY-qn-bd0"/>
-                                    <constraint firstAttribute="trailing" secondItem="WJr-Gn-AoO" secondAttribute="trailing" id="vbZ-RH-GzQ"/>
+                                    <constraint firstItem="BY9-xG-Wcc" firstAttribute="top" secondItem="WJr-Gn-AoO" secondAttribute="bottom" id="A8Q-aa-DP5"/>
+                                    <constraint firstItem="WJr-Gn-AoO" firstAttribute="top" secondItem="y6o-kB-C8F" secondAttribute="top" id="RPS-Do-QlU"/>
+                                    <constraint firstAttribute="trailing" secondItem="WJr-Gn-AoO" secondAttribute="trailing" id="YHP-hr-W4h"/>
+                                    <constraint firstAttribute="trailing" secondItem="BY9-xG-Wcc" secondAttribute="trailing" id="bi0-Yk-yZj"/>
+                                    <constraint firstItem="BY9-xG-Wcc" firstAttribute="leading" secondItem="y6o-kB-C8F" secondAttribute="leading" id="fYC-N7-Gvb"/>
+                                    <constraint firstItem="WJr-Gn-AoO" firstAttribute="leading" secondItem="y6o-kB-C8F" secondAttribute="leading" id="fqa-1b-7AR"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" name="selectedMenuItemTextColor" catalog="System" colorSpace="catalog"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="y6o-kB-C8F" secondAttribute="trailing" id="MyY-HZ-hwo"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="y6o-kB-C8F" secondAttribute="bottom" id="aNm-ko-0xz"/>
-                            <constraint firstItem="y6o-kB-C8F" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="g5b-42-z0b"/>
-                            <constraint firstItem="y6o-kB-C8F" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xq9-Rp-gQz"/>
+                            <constraint firstItem="y6o-kB-C8F" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="MiS-B3-aPY"/>
+                            <constraint firstItem="y6o-kB-C8F" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="O1A-8H-YhI"/>
+                            <constraint firstItem="y6o-kB-C8F" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="RG6-Hg-y5P"/>
+                            <constraint firstItem="y6o-kB-C8F" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="sV7-Pc-G5h"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

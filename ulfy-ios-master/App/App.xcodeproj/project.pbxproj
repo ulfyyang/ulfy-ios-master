@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2CD636B06F83418271D28699 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD635BCB1BA72B6AB62D303 /* TableView.swift */; };
 		2CD637E249D03D0D928A0378 /* ContentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD63ABC4B9CE06431E6B87F /* ContentData.swift */; };
 		2CD63BFEB0EEE8C07A9A040A /* Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD639A40546F2376FCD1459 /* Base.swift */; };
 		9D1653832304059100799406 /* ContentDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D1653822304059100799406 /* ContentDataView.xib */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2CD635BCB1BA72B6AB62D303 /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		2CD639A40546F2376FCD1459 /* Base.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base.swift; sourceTree = "<group>"; };
 		2CD63ABC4B9CE06431E6B87F /* ContentData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentData.swift; sourceTree = "<group>"; };
 		658A7E9BAD8FA7F495CC38B8 /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
@@ -51,6 +53,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2CD63DEBDEE20622E2DCA0A8 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				2CD635BCB1BA72B6AB62D303 /* TableView.swift */,
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
 		672FDCC252194848C06ED5AD /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -90,6 +100,7 @@
 				9D91C4AE22FC7CFF00F0CE35 /* LaunchScreen.storyboard */,
 				9D91C4B122FC7CFF00F0CE35 /* Info.plist */,
 				2CD639A40546F2376FCD1459 /* Base.swift */,
+				2CD63DEBDEE20622E2DCA0A8 /* TableView */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -234,6 +245,7 @@
 				9D91C4A622FC7CFE00F0CE35 /* AppDelegate.swift in Sources */,
 				2CD63BFEB0EEE8C07A9A040A /* Base.swift in Sources */,
 				2CD637E249D03D0D928A0378 /* ContentData.swift in Sources */,
+				2CD636B06F83418271D28699 /* TableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

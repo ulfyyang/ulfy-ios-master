@@ -16,10 +16,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    
-    @IBAction func clickContentDataBT(_ sender: UIButton) {
-        let controller = ContentDataController()
-        self.present(controller, animated: true, completion: nil)
+    @IBAction func clickContentDataBT(_ sender: Any) {
+        self.present(ContentDataController(), animated: true, completion: nil)
     }
+
+    @IBAction func clickTableViewBT(_ sender: Any) {
+        self.present(TableViewController(), animated: true, completion: nil)
+    }
+
 }
 
