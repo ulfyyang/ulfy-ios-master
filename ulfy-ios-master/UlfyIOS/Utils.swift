@@ -18,6 +18,13 @@ public class TaskUtils {
 
 import SnapKit
 
+extension UIView {
+    /// 用于动态获取当前View关联的nib文件的名字
+    @objc open func getLinkedNibFileName() -> String {
+        return NSStringFromClass(type(of: self)).components(separatedBy: ".").last!
+    }
+}
+
 public class UiUtils {
 
     /// 将一个View填充到容器中，该容器中只会有一个View
@@ -32,8 +39,7 @@ public class UiUtils {
     /// 将和该View关联的Nib填充到该View中
     public static func inflateNibToUIView(uiView: UIView) {
         // 获取View类名对应的Nib文件View
-        let className = type(of: uiView)
-        let nib = UINib(nibName: NSStringFromClass(className).components(separatedBy: ".").last!, bundle: Bundle(for: className))
+        let nib = UINib(nibName: uiView.getLinkedNibFileName(), bundle: Bundle(for: type(of: uiView)))
         let nibView = nib.instantiate(withOwner: uiView, options: nil).first as! UIView
         // 填充到容器中
         uiView.addSubview(nibView)

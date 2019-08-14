@@ -22,7 +22,6 @@ class ContentDataView: BaseView {
         vm = model as? ContentDataVM
         contentLB.text = vm?.content
     }
-
 }
 
 class ContentDataVM: IViewModel {
