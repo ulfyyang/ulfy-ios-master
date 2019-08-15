@@ -242,7 +242,7 @@ public class ContentDataLoader : Transponder {
         self.contentDataLoaderConfig = UlfyConfig.TransponderConfig.contentDataLoaderConfig
         super.init()
         if (showFirst) {
-            view = model.getGetViewType().init()
+            view = model.getViewType().init()
             onCreateView?(self, view!)
             UiUtils.displayViewOnContainer(view: view!, container: container)
         }
@@ -274,7 +274,7 @@ public class ContentDataLoader : Transponder {
         if (showFirst) {
             (view as! IView).bind(model: model)
         } else {
-            view = model.getGetViewType().init()
+            view = model.getViewType().init()
             onCreateView?(self, view!)
             (view as! IView).bind(model: model)
             UiUtils.displayViewOnContainer(view: view!, container: container)

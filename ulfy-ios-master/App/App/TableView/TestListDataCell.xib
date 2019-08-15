@@ -10,9 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ContentDataView" customModule="App" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TestListDataCell" customModule="App" customModuleProvider="target">
             <connections>
-                <outlet property="contentLB" destination="QYB-NA-ZCp" id="fv1-za-muB"/>
+                <outlet property="contentLB" destination="mLr-gv-tF0" id="DPG-Mw-IuV"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -20,8 +20,8 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QYB-NA-ZCp">
-                    <rect key="frame" x="186" y="438" width="42" height="20.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="列表内容" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mLr-gv-tF0">
+                    <rect key="frame" x="172" y="437.5" width="70" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -29,8 +29,8 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="QYB-NA-ZCp" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="EVN-Xy-aQJ"/>
-                <constraint firstItem="QYB-NA-ZCp" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="RPh-3N-ogi"/>
+                <constraint firstItem="mLr-gv-tF0" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="WDe-rM-9zH"/>
+                <constraint firstItem="mLr-gv-tF0" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ZUs-Pg-TEk"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>

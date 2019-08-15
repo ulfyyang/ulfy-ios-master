@@ -40,7 +40,7 @@ class ContentDataController: TitleContentController {
 
 class ContentDataView: BaseView {
     @IBOutlet var contentLB: UILabel!
-    private var vm: ContentDataVM?
+    private var vm: ContentDataVM!
     
     override init() {
         super.init()
@@ -77,7 +77,7 @@ class ContentDataVM: BaesVM {
         }
     }
     
-    override func getGetViewType() -> UIView.Type {
+    override func getViewType() -> UIView.Type {
         return ContentDataView.self
     }
 }

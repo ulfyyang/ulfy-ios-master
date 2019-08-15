@@ -6,29 +6,15 @@
 import UIKit
 import UlfyIOS
 
-class BaseController: UlfyBaseController {
-    override init() {
-        super.init()
-    }
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-}
+class BaseController: UlfyBaseController { }
 
-class BaseView: UlfyBaseNibView {
-    override init() {
-        super.init()
-    }
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-}
+class BaseView: UlfyBaseNibView { }
 
 class BaesVM: UlfyBaseVM { }
 
-class BaseCell: BaseView { }
+class BaseCell: UlfyBaseNibCell { }
 
-class BaseCM: BaesVM { }
+class BaseCM: UlfyBaseVM { }
 
 import SnapKit
 

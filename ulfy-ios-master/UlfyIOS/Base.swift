@@ -36,6 +36,25 @@ open class UlfyBaseNibView: UIView, IView {
 
 }
 
+/// 提供Nib绘制界面加载Cell的公共父类
+open class UlfyBaseNibCell: UITableViewCell, IView {
+
+    /// 构造方法：子类必须实现
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        UiUtils.inflateNibToUIView(uiView: self)
+    }
+
+    /// 构造方法：子类必须实现
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
+    /// 数据绑定方法
+    open func bind(model: IViewModel) { }
+
+}
+
 /// 数据模型的公共父类
 open class UlfyBaseVM: IViewModel {
 
@@ -48,7 +67,7 @@ open class UlfyBaseVM: IViewModel {
     }
 
     /// 数据模型提供的显示界面
-    open func getGetViewType() -> UIView.Type {
+    open func getViewType() -> UIView.Type {
         fatalError("getGetViewType() has not been implemented")
     }
 

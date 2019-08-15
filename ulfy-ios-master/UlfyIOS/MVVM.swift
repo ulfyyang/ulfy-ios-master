@@ -14,7 +14,7 @@ public protocol IView {
 /// 数据模型需要实现的接口
 public protocol IViewModel {
     /// 数据模型使用的View
-    func getGetViewType() -> UIView.Type
+    func getViewType() -> UIView.Type
 }
 
 /// 针对TableView的数据源适配器
@@ -58,7 +58,7 @@ public class SingleDatasource<M: IViewModel>: NSObject, UITableViewDataSource, U
 
     /// 获取每一行的样式
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let convertView = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(modelList![indexPath.row].getGetViewType()))
+        let convertView = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(modelList![indexPath.row].getViewType()))
         // 去除点击效果
         convertView?.selectionStyle = UITableViewCell.SelectionStyle.none
         // 执行数据绑定

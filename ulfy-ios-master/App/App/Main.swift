@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func clickTableViewBT(_ sender: Any) {
-        self.present(TableViewController(), animated: true, completion: nil)
+        self.present(TestListDataController(), animated: true, completion: nil)
     }
 
 }
