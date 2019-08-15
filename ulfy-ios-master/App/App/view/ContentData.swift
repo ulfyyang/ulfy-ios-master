@@ -8,8 +8,8 @@ import UlfyIOS
 import SnapKit
 
 class ContentDataController: TitleContentController {
-    var contentVm: ContentDataVM?
-    var contentView: ContentDataView?
+    var contentVm: ContentDataVM!
+    var contentView: ContentDataView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,7 @@ class ContentDataController: TitleContentController {
     }
 
     func initContent() {
-        TaskUtils.loadData(executeBody: contentVm!.loadData(), transponder: ContentDataLoader(container: contentV!, model: contentVm!, showFirst: false)
+        TaskUtils.loadData(executeBody: contentVm.loadData(), transponder: ContentDataLoader(container: contentV!, model: contentVm, showFirst: false)
                 .onCreateView { loader, view in
                     self.contentView = (view as! ContentDataView)
                 }
@@ -57,10 +57,10 @@ class ContentDataView: BaseView {
     }
 
     override func bind(model: IViewModel) {
-        vm = model as? ContentDataVM
-        contentLB.text = vm?.content
+        vm = (model as! ContentDataVM)
+        contentLB.text = vm.content
 
-        TaskUtils.loadData(executeBody: vm!.loadData(), transponder: DialogProcesser().setOnSuccess { processer in
+        TaskUtils.loadData(executeBody: vm.loadData(), transponder: DialogProcesser().setOnSuccess { processer in
             print("处理完了")
         })
     }

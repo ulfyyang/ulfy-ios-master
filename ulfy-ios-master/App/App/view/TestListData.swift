@@ -10,8 +10,8 @@ import UlfyIOS
 // tableView的基本
 /// 注意： Controller之前的单词不要和xib文件名重名，否则会自动去寻找其对应的xib文件导致错乱
 class TestListDataController: TitleContentController {
-    var contentVm: TestListDataVM?
-    var contentView: TestListDataView?
+    var contentVm: TestListDataVM!
+    var contentView: TestListDataView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,7 @@ class TestListDataController: TitleContentController {
     }
 
     func initContent() {
-        TaskUtils.loadData(executeBody: contentVm!.loadData(), transponder: ContentDataLoader(container: contentV!, model: contentVm!, showFirst: false)
+        TaskUtils.loadData(executeBody: contentVm.loadData(), transponder: ContentDataLoader(container: contentV!, model: contentVm, showFirst: false)
                 .onCreateView { loader, view in
                     self.contentView = (view as! TestListDataView)
                 }
@@ -91,11 +91,11 @@ class TestListDataVM: BaesVM {
 
 class TestListDataCell: BaseCell {
     @IBOutlet var contentLB: UILabel!
-    private var vm: TestListDataCM?
+    private var vm: TestListDataCM!
 
     override func bind(model: IViewModel) {
         vm = (model as! TestListDataCM)
-        self.contentLB.text = vm!.content
+        self.contentLB.text = vm.content
     }
 }
 
