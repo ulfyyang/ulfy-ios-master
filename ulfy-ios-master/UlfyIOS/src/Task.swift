@@ -229,7 +229,7 @@ import SnapKit
 public class ContentDataLoader : Transponder {
     private var container: UIView                                       // 执行过程中操作的容器
     private var model: IViewModel                                       // 当任务执行成功后使用的数据模型
-    private var view: UIView?                                           // 执行成功后保留的View，保留是为了尽可能的复用
+    private var view: UIView!                                           // 执行成功后保留的View，保留是为了尽可能的复用
     private var showFirst: Bool                                         // 是否有限显示出来
     private var contentDataLoaderConfig: ContentDataLoaderConfig        // 表现配置
     private var onCreateView: ((ContentDataLoader, UIView) -> Void)?    // 当View被创建时的回调
@@ -243,8 +243,8 @@ public class ContentDataLoader : Transponder {
         super.init()
         if (showFirst) {
             view = model.getViewType().init()
-            onCreateView?(self, view!)
-            UiUtils.displayViewOnContainer(view: view!, container: container)
+            onCreateView?(self, view)
+            UiUtils.displayViewOnContainer(view: view, container: container)
         }
     }
 
@@ -275,9 +275,9 @@ public class ContentDataLoader : Transponder {
             (view as! IView).bind(model: model)
         } else {
             view = model.getViewType().init()
-            onCreateView?(self, view!)
+            onCreateView?(self, view)
             (view as! IView).bind(model: model)
-            UiUtils.displayViewOnContainer(view: view!, container: container)
+            UiUtils.displayViewOnContainer(view: view, container: container)
         }
     }
 
@@ -290,7 +290,7 @@ public class ContentDataLoader : Transponder {
         UiUtils.displayViewOnContainer(view: failView as! UIView, container: container)
     }
 
-    public final func getView() -> UIView? {
+    public final func getView() -> UIView {
         return self.view
     }
 
@@ -331,6 +331,7 @@ public class LoadDataUiTask : UiTask {
 
     /// 通知任务开始了
     public final func notifyStart(tipData: Any) -> Void {
+        super.notifyStart()
         runOnUiThread {
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_START, data: tipData));
         }
@@ -341,6 +342,7 @@ public class LoadDataUiTask : UiTask {
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_SUCCESS, data: tipData));
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_FINISH, data: tipData));
         }
+        super.notifyFinish()
     }
     /// 通知任务失败了
     public final func notifyFail(tipData: Any) -> Void {
@@ -348,6 +350,7 @@ public class LoadDataUiTask : UiTask {
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_FAIL, data: tipData));
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_FINISH, data: tipData));
         }
+        super.notifyFinish()
     }
     /// 通知任务更新了
     public final func notifyUpdate(tipData: Any) -> Void {
