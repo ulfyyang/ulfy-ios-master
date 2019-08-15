@@ -6,16 +6,44 @@
 import UIKit
 import UlfyIOS
 
-class BaseView: UlfyBaseNibView, IView {
-
+class BaseController: UlfyBaseController {
     override init() {
         super.init()
     }
-
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    func bind(model: IViewModel) { }
+class BaseView: UlfyBaseNibView {
+    override init() {
+        super.init()
+    }
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+}
 
+class BaesVM: UlfyBaseVM { }
+
+class BaseCell: BaseView { }
+
+class BaseCM: BaesVM { }
+
+import SnapKit
+
+class TitleContentController: BaseController {
+    var contentV: UIView?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let box: UIView = UIView()
+        box.backgroundColor = UIColor.white
+        self.view.addSubview(box)
+        box.snp.makeConstraints { maker in
+            maker.size.equalToSuperview()
+        }
+
+        self.contentV = box
+    }
 }

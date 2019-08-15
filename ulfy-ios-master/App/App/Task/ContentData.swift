@@ -7,24 +7,34 @@ import UIKit
 import UlfyIOS
 import SnapKit
 
-class ContentDataController: UIViewController {
-    var vm: ContentDataVM = ContentDataVM()
-    let box: UIView = UIView()
+class ContentDataController: TitleContentController {
+    var contentVm: ContentDataVM?
+    var contentView: ContentDataView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        box.backgroundColor = UIColor.white
-        self.view.addSubview(box)
-        box.snp.makeConstraints { maker in
-            maker.size.equalToSuperview()
-        }
-        self.initContent()
+        initModel()
+        initContent()
+        initController()
+    }
+
+    func initModel() {
+        contentVm = ContentDataVM()
     }
 
     func initContent() {
-        TaskUtils.loadData(executeBody: vm.loadData(), transponder: ContentDataLoader(container: self.box, model: vm, showFirst: false).setOnReloadListener {
-            self.initContent()
-        })
+        TaskUtils.loadData(executeBody: contentVm!.loadData(), transponder: ContentDataLoader(container: contentV!, model: contentVm!, showFirst: false)
+                .onCreateView { loader, view in
+                    self.contentView = (view as! ContentDataView)
+                }
+                .setOnReloadListener {
+                    self.initContent()
+                }
+        )
+    }
+
+    func initController() {
+
     }
 }
 
@@ -34,10 +44,16 @@ class ContentDataView: BaseView {
     
     override init() {
         super.init()
+        initView()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        initView()
+    }
+
+    private func initView() {
+
     }
 
     override func bind(model: IViewModel) {
@@ -48,26 +64,20 @@ class ContentDataView: BaseView {
             print("处理完了")
         })
     }
-
-
 }
 
-class ContentDataVM: IViewModel {
+class ContentDataVM: BaesVM {
     var content: String = "加载成功的内容"
 
     func loadData() -> (LoadDataUiTask) -> Void {
-        return provideOnExecutor { task in
+        return provideExecuteBody { task in
             task.notifyStart(tipData: "正在加载...")
             sleep(2)
             task.notifySuccess(tipData: "加载成功")
         }
     }
     
-    private func provideOnExecutor(executeBody: @escaping (LoadDataUiTask) -> Void) -> (LoadDataUiTask) -> Void {
-        return executeBody
-    }
-    
-    func getGetViewType() -> UIView.Type {
+    override func getGetViewType() -> UIView.Type {
         return ContentDataView.self
     }
 }

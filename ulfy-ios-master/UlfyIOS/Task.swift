@@ -232,6 +232,7 @@ public class ContentDataLoader : Transponder {
     private var view: UIView?                                           // 执行成功后保留的View，保留是为了尽可能的复用
     private var showFirst: Bool                                         // 是否有限显示出来
     private var contentDataLoaderConfig: ContentDataLoaderConfig        // 表现配置
+    private var onCreateView: ((ContentDataLoader, UIView) -> Void)?    // 当View被创建时的回调
     private var onReload: (() -> Void)?                                 // 点击重试执行的操作
 
     public init(container: UIView, model: IViewModel, showFirst: Bool) {
@@ -242,7 +243,7 @@ public class ContentDataLoader : Transponder {
         super.init()
         if (showFirst) {
             view = model.getGetViewType().init()
-            onCreateView(loader: self, createdView: view!)
+            onCreateView?(self, view!)
             UiUtils.displayViewOnContainer(view: view!, container: container)
         }
     }
@@ -274,7 +275,7 @@ public class ContentDataLoader : Transponder {
             (view as! IView).bind(model: model)
         } else {
             view = model.getGetViewType().init()
-            onCreateView(loader: self, createdView: view!)
+            onCreateView?(self, view!)
             (view as! IView).bind(model: model)
             UiUtils.displayViewOnContainer(view: view!, container: container)
         }
@@ -289,12 +290,16 @@ public class ContentDataLoader : Transponder {
         UiUtils.displayViewOnContainer(view: failView as! UIView, container: container)
     }
 
-    public func onCreateView(loader: ContentDataLoader, createdView: UIView) { }
-
     public final func getView() -> UIView? {
         return self.view
     }
-    
+
+    /// 当View被创建时的回调
+    public final func onCreateView(onCreateView: @escaping (ContentDataLoader, UIView) -> Void) -> ContentDataLoader {
+        self.onCreateView = onCreateView
+        return self
+    }
+
     /// 设置重试操作
     public final func setOnReloadListener(onReload: (() -> Void)?) -> ContentDataLoader {
         self.onReload = onReload

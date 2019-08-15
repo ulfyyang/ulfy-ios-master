@@ -15,7 +15,7 @@ class TableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        dataSource.setOnItemClickListener { view, path, cm in
+        dataSource.setOnItemClickListener { tableView, indexPath, cm in
             print("点击了\(indexPath.row)")
         }
 
