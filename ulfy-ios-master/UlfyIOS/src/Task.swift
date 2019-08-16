@@ -68,6 +68,41 @@ public class UiTask : Task {
     }
 }
 
+/// 网络任务
+/// 该任务配有网络访问的常用配置
+public class NetUiTask: UiTask {
+    private var proxyTask: UiTask
+    private var transponder: Transponder
+    private var netWorkEnable = true
+
+    public init(proxyTask: UiTask, transponder: Transponder) {
+        self.proxyTask = proxyTask
+        self.transponder = transponder
+    }
+
+    override func run() {
+        // 没有打开网络连接开关 或 网络连接开关已经打开，但是无网络连接
+        if (!netWorkEnable) {
+            runOnUiThread {
+                self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_NO_NET_CONNECTION, data: "当前无网络链接"))
+            }
+        }
+        // 有网络并且是wifi
+        else if (!isCancelUiHandler()) {
+            proxyTask.run()
+        }
+    }
+
+    override func setCancelUiHandler(cancelUiHandler: Bool) {
+        super.setCancelUiHandler(cancelUiHandler: cancelUiHandler)
+        proxyTask.setCancelUiHandler(cancelUiHandler: cancelUiHandler)
+    }
+
+    override func isCancelUiHandler() -> Bool {
+        return super.isCancelUiHandler() && proxyTask.isCancelUiHandler()
+    }
+}
+
 /// 任务执行器，用于执行一个任务。后期会扩展不同的执行器实现
 public class TaskExecutor {
     public static let defaultConcurrentTaskExecutor = ConcurrentTaskExecutor()       // 默认的并发执行器

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2CD634C9A02BA0957F28D775 /* RefresherAndLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD6351B40146D7B7DB581B3 /* RefresherAndLoader.swift */; };
 		2CD63585B680FB1845EDC022 /* Processer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD639CCEF7F342BA6CB2895 /* Processer.swift */; };
 		2CD6371AF610721A4FEBB2E0 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD639954F85B6D0294EFF31 /* Config.swift */; };
 		2CD6373E18781B5DC902E331 /* Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD63068E37FA46C1EE60D76 /* Base.swift */; };
@@ -23,6 +24,7 @@
 		2CD6312B2628F53A7C63D1CF /* Loader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		2CD6326175852AB19136A569 /* MVVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MVVM.swift; sourceTree = "<group>"; };
 		2CD63334DE4F221BA706F705 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		2CD6351B40146D7B7DB581B3 /* RefresherAndLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefresherAndLoader.swift; sourceTree = "<group>"; };
 		2CD639954F85B6D0294EFF31 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		2CD639CCEF7F342BA6CB2895 /* Processer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Processer.swift; sourceTree = "<group>"; };
 		2CD63AAD5E152AC379D90992 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 			children = (
 				2CD6312B2628F53A7C63D1CF /* Loader.swift */,
 				2CD639CCEF7F342BA6CB2895 /* Processer.swift */,
+				2CD6351B40146D7B7DB581B3 /* RefresherAndLoader.swift */,
 			);
 			path = transponder;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				2CD63C3E1C5EE0F6443BCD95 /* Task.swift in Sources */,
 				2CD63879EACE9439B4D43071 /* Loader.swift in Sources */,
 				2CD63585B680FB1845EDC022 /* Processer.swift in Sources */,
+				2CD634C9A02BA0957F28D775 /* RefresherAndLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

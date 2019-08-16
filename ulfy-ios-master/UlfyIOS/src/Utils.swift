@@ -71,9 +71,7 @@ public class DialogUtils {
 
     public static func dismissDialog() {
         let dialog = DialogRepository.instance.getDialogById(dialogId: ULFY_MAIN_DIALOG_ID)
-        if (dialog != nil) {
-            dialog.dismiss()
-        }
+        dialog.dismiss()
     }
 }
 
@@ -84,6 +82,12 @@ public class TaskUtils {
     /// - transponder           提供任务执行的响应器
     public static func loadData(executeBody: @escaping (LoadDataUiTask) -> Void, transponder: Transponder) {
         TaskExecutor.defaultExecutor.post(task: LoadDataUiTask(executeBody: executeBody, transponder: transponder))
+    }
+
+
+    /// 配置一个Smart的普通任务下拉刷新
+    public static func configLoadDataRefresh(tableView: UITableView, onRefreshSuccessListener: ((MJRefresher) -> Void)?) -> MJRefresher {
+        return MJRefresher(tableView: tableView, onRefreshSuccessListener: onRefreshSuccessListener).buildLoadDataRefresher();
     }
 
 }
