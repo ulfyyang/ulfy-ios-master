@@ -72,7 +72,7 @@ public class MJRefresher: Transponder {
     override func onNetError(data: Any) {
         super.onNetError(data: data)
         tableView.mj_header.endRefreshing()
-        print(data)
+        UiUtils.show(message: data)
     }
 
     override func onSuccess(data: Any) {
@@ -81,5 +81,76 @@ public class MJRefresher: Transponder {
 
     override func onFinish(data: Any) {
         tableView.mj_header.endRefreshing()
+    }
+}
+
+/// 上拉加载器
+/// 支持组件：UIScrollView、UITableView、UICollectionView、UIWebView
+public class MJLoader: Transponder {
+    private var tableView: UITableView
+    private var netUiTask: NetUiTask!
+    private var loadDataUiTask: LoadDataUiTask!
+    private var taskExecutor: TaskExecutor?
+    private var onLoadSuccessListener: ((MJLoader) -> Void)?
+
+    public init(tableView: UITableView, onLoadSuccessListener: ((MJLoader) -> Void)?) {
+        self.tableView = tableView
+        self.onLoadSuccessListener = onLoadSuccessListener
+        super.init()
+        self.initSetting()
+    }
+
+    private func initSetting() {
+//    let footer = MJRefreshAutoNormalFooter()                                      // 在ios11上会触发多次回调
+        let footer = MJRefreshBackStateFooter()
+        footer.setTitle("上拉加载...", for: .idle)                                   // 上拉时的提示
+        footer.setTitle("上拉加载...", for: .pulling)                                // 上拉时的提示
+        footer.setTitle("正在加载...", for: .refreshing)                             // 正在加载时的提示
+        footer.setTitle("正在加载...", for: .willRefresh)                            // 加载完毕即将显示的提示
+        footer.setTitle("没有了", for: .noMoreData)                                  // 当没有数据时的提示
+        footer.setRefreshingTarget(self, refreshingAction: #selector(onLoadData))   // 设置上拉加载触发的方法
+        tableView.mj_footer = footer                                                // 设置与之关联的组件
+    }
+
+    @objc private func onLoadData() {
+        if (taskExecutor == nil) {
+            TaskExecutor.defaultConcurrentTaskExecutor.post(task: netUiTask)
+        } else {
+            taskExecutor?.post(task: netUiTask)
+        }
+    }
+
+    func buildLoadDataRefresher() -> MJLoader {
+        loadDataUiTask = LoadDataUiTask(executeBody: nil, transponder: self)
+        netUiTask = NetUiTask(proxyTask: loadDataUiTask, transponder: self)
+        return self
+    }
+
+    public func updateExecuteBody(executeBody: ((LoadDataUiTask) -> Void)?) {
+        loadDataUiTask.setExecuteBody(executeBody: executeBody)
+    }
+
+    public func setTaskExecutor(taskExecutor: TaskExecutor) -> MJLoader {
+        self.taskExecutor = taskExecutor
+        return self
+    }
+
+    override func onNoNetConnection(data: Any) {
+        super.onNoNetConnection(data: data)
+        tableView.mj_footer.endRefreshing()
+    }
+
+    override func onNetError(data: Any) {
+        super.onNetError(data: data)
+        tableView.mj_footer.endRefreshing()
+        UiUtils.show(message: data)
+    }
+
+    override func onSuccess(data: Any) {
+        onLoadSuccessListener?(self)
+    }
+
+    override func onFinish(data: Any) {
+        tableView.mj_footer.endRefreshing()
     }
 }

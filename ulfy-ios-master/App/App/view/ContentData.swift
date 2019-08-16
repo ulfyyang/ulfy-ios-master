@@ -61,7 +61,7 @@ class ContentDataView: BaseView {
         contentLB.text = vm.content
 
         TaskUtils.loadData(executeBody: vm.loadData, transponder: DialogProcesser().setOnSuccess { processer in
-            print("处理完了")
+            UiUtils.show(message: "处理完了")
         })
     }
 }

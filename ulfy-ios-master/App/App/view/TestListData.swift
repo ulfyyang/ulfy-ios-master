@@ -48,12 +48,7 @@ class TestListDataView: BaseView {
     private var dataSource = SingleDatasource<TestListDataCM>()
     private var vm: TestListDataVM!
     private var refresher: MJRefresher!
-
-    // 支持组件：UIScrollView、UITableView、UICollectionView、UIWebView
-
-//    let header = MJRefreshNormalHeader()
-//    let footer = MJRefreshAutoNormalFooter()      // 在ios11上会触发多次回调
-    let footer = MJRefreshBackStateFooter()
+    private var loader: MJLoader!
 
     override init() {
         super.init()
@@ -67,46 +62,30 @@ class TestListDataView: BaseView {
 
     private func initView() {
         refresher = TaskUtils.configLoadDataRefresh(tableView: self.dataTV) { refresher in
-            print("刷新了...")
+            UiUtils.show(message: "刷新了...")
             self.dataTV.reloadData()
         }
-
-        // 上拉加载
-        footer.setRefreshingTarget(self, refreshingAction: #selector(loadData))
-        footer.setTitle("上拉加载...", for: .idle)
-        footer.setTitle("上拉加载...", for: .pulling)
-        footer.setTitle("正在加载...", for: .refreshing)
-        footer.setTitle("正在加载...", for: .willRefresh)
-        footer.setTitle("没有了", for: .noMoreData)
-        self.dataTV.mj_footer = footer
-//        self.dataTV.mj_footer.isHidden = true                               // 禁用上拉加载
+        loader = TaskUtils.configLoadListPageLoader(tableView: self.dataTV) { loader in
+            UiUtils.show(message: "加载...")
+            self.dataTV.reloadData()
+        }
     }
 
     override func bind(model: IViewModel) {
         vm = (model as! TestListDataVM)
         refresher.updateExecuteBody(executeBody: vm.loadData)
+        loader.updateExecuteBody(executeBody: vm.loadMore)
         dataSource.bindUITableView(tableView: dataTV, supportCellType: TestListDataCell.self)
         dataSource.setOnItemClickListener { tableView, indexPath, cm in
-            print("点击了\(indexPath.row)")
+            UiUtils.show(message: "点击了\(indexPath.row)")
         }
         dataSource.setData(modelList: vm.cmList)
-    }
-
-    @objc func loadData() {
-        sleep(2)
-        print("加载了...")
-        for _ in 0..<10 {
-            vm.cmList.add(TestListDataCM())
-        }
-        print(vm.cmList.count)
-        self.dataTV.reloadData()
-        footer.endRefreshing()
     }
 }
 
 class TestListDataVM: BaesVM {
     var cmList = NSMutableArray()
-
+    
     func loadData(task: LoadDataUiTask) {
         task.notifyStart(tipData: "正在加载...")
         self.cmList.removeAllObjects()
@@ -117,6 +96,15 @@ class TestListDataVM: BaesVM {
         task.notifySuccess(tipData: "加载成功")
     }
 
+    func loadMore(task: LoadDataUiTask) {
+        task.notifyStart(tipData: "正在加载...")
+        for _ in 0..<10 {
+            self.cmList.add(TestListDataCM())
+        }
+        sleep(2)
+        task.notifySuccess(tipData: "加载成功")
+    }
+    
     override func getViewType() -> UIView.Type {
         return TestListDataView.self
     }

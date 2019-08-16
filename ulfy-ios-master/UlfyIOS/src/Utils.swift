@@ -90,6 +90,11 @@ public class TaskUtils {
         return MJRefresher(tableView: tableView, onRefreshSuccessListener: onRefreshSuccessListener).buildLoadDataRefresher();
     }
 
+    /// 配置一个Smart的上拉加载
+    public static func configLoadListPageLoader(tableView: UITableView, onLoadSuccessListener: ((MJLoader) -> Void)?) -> MJLoader {
+        return MJLoader(tableView: tableView, onLoadSuccessListener: onLoadSuccessListener).buildLoadDataRefresher()
+    }
+    
 }
 
 import SnapKit
@@ -103,6 +108,13 @@ extension UIView {
 
 public class UiUtils {
 
+    /// 显示吐司：支持View和常规对象
+    /// 如果是View则以View原本的样式显示
+    /// 如果是常规对象则以toString的样式显示
+    public static func show(message: Any) {
+        print(message)
+    }
+    
     /// 将一个View填充到容器中，该容器中只会有一个View
     public static func displayViewOnContainer(view: UIView, container: UIView) {
         container.subviews.forEach { view in view.removeFromSuperview() }
