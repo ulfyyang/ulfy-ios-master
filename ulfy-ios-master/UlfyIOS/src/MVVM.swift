@@ -19,14 +19,14 @@ public protocol IViewModel {
 
 /// 针对TableView的数据源适配器
 public class SingleDatasource<M: IViewModel>: NSObject, UITableViewDataSource, UITableViewDelegate {
-    private var modelList:[M]?                                                      // 数据模型列表
+    private var modelList: NSMutableArray?                                          // 数据模型列表
     private var onItemClickListener: ((UITableView, IndexPath, M) -> Void)?         // 单击事件
 
     /// 构造方法
     public override init() { }
 
     /// 构造方法
-    public init(modelList:[M]) {
+    public init(modelList: NSMutableArray) {
         self.modelList = modelList
     }
 
@@ -40,7 +40,7 @@ public class SingleDatasource<M: IViewModel>: NSObject, UITableViewDataSource, U
     }
 
     /// 设置显示的数据
-    public func setData(modelList: [M]) {
+    public func setData(modelList: NSMutableArray) {
         self.modelList = modelList
     }
 
@@ -53,17 +53,17 @@ public class SingleDatasource<M: IViewModel>: NSObject, UITableViewDataSource, U
 
     /// 点击事件
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        onItemClickListener?(tableView, indexPath, modelList![indexPath.row])
+        onItemClickListener?(tableView, indexPath, modelList![indexPath.row] as! M)
     }
 
     /// 获取每一行的样式
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let convertView = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(modelList![indexPath.row].getViewType()))
+        let convertView = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass((modelList![indexPath.row] as! M).getViewType()))
         // 去除点击效果
         convertView?.selectionStyle = UITableViewCell.SelectionStyle.none
         // 执行数据绑定
         if (convertView is IView) {
-            (convertView as! IView).bind(model: modelList![indexPath.row])
+            (convertView as! IView).bind(model: modelList![indexPath.row] as! M)
         }
         return convertView!
     }

@@ -28,6 +28,7 @@
 		2CD63AAD5E152AC379D90992 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		2E7869C27E5E24854C358402 /* Pods-UlfyIOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UlfyIOS.release.xcconfig"; path = "Target Support Files/Pods-UlfyIOS/Pods-UlfyIOS.release.xcconfig"; sourceTree = "<group>"; };
 		695458D59636CED74245BD9E /* Pods_UlfyIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UlfyIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D82824E2306759C00B52D6D /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 		9D91C4C122FC7D1600F0CE35 /* UlfyIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UlfyIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D91C4C422FC7D1600F0CE35 /* UlfyIOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UlfyIOS.h; sourceTree = "<group>"; };
 		9D91C4C522FC7D1600F0CE35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -89,6 +90,7 @@
 		9D91C4B722FC7D1600F0CE35 = {
 			isa = PBXGroup;
 			children = (
+				9D82824E2306759C00B52D6D /* Header.h */,
 				9D91C4C322FC7D1600F0CE35 /* UlfyIOS */,
 				9D91C4C222FC7D1600F0CE35 /* Products */,
 				5E1C42A2A2283D02D0CE76EB /* Pods */,
