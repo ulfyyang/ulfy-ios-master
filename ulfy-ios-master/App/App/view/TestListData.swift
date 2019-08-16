@@ -92,10 +92,14 @@ class TestListDataVM: BaesVM {
     }
 
     func loadData(task: LoadListPageUiTask, dataList: NSMutableArray, tempList: NSMutableArray, page: Int, pageSize: Int) {
-        for index in 1...pageSize {
-            tempList.add(TestListDataCM(content: "当前页：\(page) 页大小：\(pageSize) 所在位置：\(index)"))
+        let fulture = HttpUtils.getTestListDataFulture(page: page, pageSize: pageSize)
+        do {
+            for itemContent in try fulture.get()! {
+                tempList.add(TestListDataCM(content: itemContent))
+            }
+        } catch {
+            print(error)
         }
-        sleep(2)
     }
 
     override func getViewType() -> UIView.Type {

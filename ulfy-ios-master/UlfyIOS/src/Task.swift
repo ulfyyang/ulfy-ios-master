@@ -26,19 +26,15 @@ public class Task {
 
     /// 每个任务都应该有一个可执行的方法
     /// 对于具体的任务必须实现该方法
-    func run() { }
-
-    /// 通知任务开始执行了
-    final func notifyStart() {
+    func run() {
         isRunning = true
         onStart?()
-    }
-
-    // 通知任务执行完成了
-    final func notifyFinish() {
+        run(task: self)
         isRunning = false
         onFinish?()
     }
+
+    func run(task: Task) { }
 }
 
 /// 通常任务都是在后台执行的，该任务内部提供了可直接更新UI的方法
@@ -80,7 +76,7 @@ public class NetUiTask: UiTask {
         self.transponder = transponder
     }
 
-    override func run() {
+    override func run(task: Task) {
         // 没有打开网络连接开关 或 网络连接开关已经打开，但是无网络连接
         if (!netWorkEnable) {
             runOnUiThread {
@@ -354,7 +350,7 @@ public class LoadDataUiTask : UiTask {
     }
 
     /// 任务的执行方法实现
-    final override func run() {
+    final override func run(task: Task) {
         if (!isCancelUiHandler()) {
             if (executeBody == nil) {
                 notifySuccess(tipData: "加载完成")
@@ -366,7 +362,6 @@ public class LoadDataUiTask : UiTask {
 
     /// 通知任务开始了
     public final func notifyStart(tipData: Any) -> Void {
-        super.notifyStart()
         runOnUiThread {
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_START, data: tipData));
         }
@@ -377,7 +372,6 @@ public class LoadDataUiTask : UiTask {
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_SUCCESS, data: tipData));
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_FINISH, data: tipData));
         }
-        super.notifyFinish()
     }
     /// 通知任务失败了
     public final func notifyFail(tipData: Any) -> Void {
@@ -385,7 +379,6 @@ public class LoadDataUiTask : UiTask {
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_FAIL, data: tipData));
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_FINISH, data: tipData));
         }
-        super.notifyFinish()
     }
     /// 通知任务更新了
     public final func notifyUpdate(tipData: Any) -> Void {
@@ -429,7 +422,7 @@ public class LoadListPageUiTask: UiTask {
         self.loadSimplePage = loadSimplePage
     }
     
-    override func run() {
+    override func run(task: Task) {
         if (!isCancelUiHandler()) {
             if (loadListPageBody == nil) {
                 notifySuccess(tipData: "加载完成");
@@ -441,7 +434,6 @@ public class LoadListPageUiTask: UiTask {
 
     /// 通知任务开始了
     public final func notifyStart(tipData: Any) -> Void {
-        super.notifyStart()
         runOnUiThread {
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_START, data: tipData));
         }
@@ -453,7 +445,6 @@ public class LoadListPageUiTask: UiTask {
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_SUCCESS, data: tipData));
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_FINISH, data: tipData));
         }
-        super.notifyFinish()
     }
     /// 通知任务失败了
     public final func notifyFail(tipData: Any) -> Void {
@@ -462,7 +453,6 @@ public class LoadListPageUiTask: UiTask {
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_FAIL, data: tipData));
             self.transponder.onTranspondMessage(message: Message(type: Message.TYPE_FINISH, data: tipData));
         }
-        super.notifyFinish()
     }
 
     public func getTaskInfo() -> LoadListPageUiTaskInfo {
@@ -659,3 +649,38 @@ public class LoadListPageUiTask: UiTask {
     }
 }
 
+/// 用于转化异步方法为同步方法的工具
+public class Fulture<T> {
+    let semaphore = DispatchSemaphore(value: 0)     // 控制执行流程的信号量
+    var error: Error?                               // 检测是否有错误的异常
+    var data: T?                                    // 加载的数据
+
+    func load(onLoadData: ((Fulture<T>) -> Void)?) -> Fulture {
+        DispatchQueue.global().async {
+            onLoadData?(self)
+        }
+        return self
+    }
+
+    /// 异步任务执行成功
+    public func success(data: T) {
+        self.data = data
+        semaphore.signal()
+    }
+
+    /// 异步任务执行失败
+    public func error(error: Error) {
+        self.error = error
+        semaphore.signal()
+    }
+
+    /// 获取异步任务执行的结果
+    public func get() throws -> T? {
+        semaphore.wait()
+        if (error == nil) {
+            return data
+        } else {
+            throw error!
+        }
+    }
+}

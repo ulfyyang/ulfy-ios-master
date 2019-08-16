@@ -103,7 +103,11 @@ public class TaskUtils {
     public static func configLoadListPageLoader(tableView: UITableView, onLoadSuccessListener: ((MJLoader) -> Void)?) -> MJLoader {
         return MJLoader(tableView: tableView, onLoadSuccessListener: onLoadSuccessListener)
     }
-    
+
+    /// 获取一个未来数据对象
+    public static func fultureData<T>(onLoadData: ((Fulture<T>) -> Void)?) -> Fulture<T> {
+        return Fulture().load(onLoadData: onLoadData)
+    }
 }
 
 import SnapKit

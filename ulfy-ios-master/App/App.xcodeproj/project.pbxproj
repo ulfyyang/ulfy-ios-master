@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2CD630470A0E96B8691C5B3B /* TestListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD63A27EE75C36BCF0497EE /* TestListData.swift */; };
+		2CD6333F09513C82F21D2458 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD634F00FF6FA502F5F6922 /* Utils.swift */; };
 		2CD63A128270C2A4E8B5319B /* TestListDataCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CD63319BF1EEF399060F2AA /* TestListDataCell.xib */; };
 		2CD63A4524FC420E3F8296AB /* ContentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD6356EE4629AACD278B993 /* ContentData.swift */; };
 		2CD63AB0938642B14DD6E165 /* ContentDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CD63EC98186BC59C846508F /* ContentDataView.xib */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		2CD63319BF1EEF399060F2AA /* TestListDataCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TestListDataCell.xib; sourceTree = "<group>"; };
+		2CD634F00FF6FA502F5F6922 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		2CD6356EE4629AACD278B993 /* ContentData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentData.swift; sourceTree = "<group>"; };
 		2CD638F6B33834059D568CB4 /* TestListDataView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TestListDataView.xib; sourceTree = "<group>"; };
 		2CD639A40546F2376FCD1459 /* Base.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base.swift; sourceTree = "<group>"; };
@@ -57,6 +59,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2CD6335CC3F5D8A10243C3B0 /* infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				2CD634F00FF6FA502F5F6922 /* Utils.swift */,
+			);
+			path = infrastructure;
+			sourceTree = "<group>";
+		};
 		2CD6360A3D7611DF7840B175 /* view */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +126,7 @@
 				2CD639A40546F2376FCD1459 /* Base.swift */,
 				2CD6360A3D7611DF7840B175 /* view */,
 				2CD639BC005DE277B11C9A7B /* xib */,
+				2CD6335CC3F5D8A10243C3B0 /* infrastructure */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -254,6 +265,7 @@
 				2CD63BFEB0EEE8C07A9A040A /* Base.swift in Sources */,
 				2CD630470A0E96B8691C5B3B /* TestListData.swift in Sources */,
 				2CD63A4524FC420E3F8296AB /* ContentData.swift in Sources */,
+				2CD6333F09513C82F21D2458 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

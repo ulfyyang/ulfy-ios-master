@@ -71,8 +71,13 @@ class ContentDataVM: BaesVM {
 
     func loadData(task: LoadDataUiTask) {
         task.notifyStart(tipData: "正在加载...")
-        sleep(2)
-        task.notifySuccess(tipData: "加载成功")
+        let fulture = HttpUtils.getContentLoadDataFulture()
+        do {
+            try content = fulture.get()!
+            task.notifySuccess(tipData: "加载成功")
+        } catch {
+            task.notifyFail(tipData: error)
+        }
     }
     
     override func getViewType() -> UIView.Type {
