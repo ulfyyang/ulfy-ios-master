@@ -61,11 +61,6 @@ open class UlfyBaseVM: IViewModel {
     /// 公共构造方法
     public init() { }
 
-    /// 提供LoadDataUiTask任务执行的执行体
-    public func provideExecuteBody(executeBody: @escaping (LoadDataUiTask) -> Void) -> (LoadDataUiTask) -> Void {
-        return executeBody
-    }
-
     /// 数据模型提供的显示界面
     open func getViewType() -> UIView.Type {
         fatalError("getGetViewType() has not been implemented")

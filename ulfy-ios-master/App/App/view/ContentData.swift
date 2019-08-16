@@ -23,7 +23,7 @@ class ContentDataController: TitleContentController {
     }
 
     func initContent() {
-        TaskUtils.loadData(executeBody: contentVm.loadData(), transponder: ContentDataLoader(container: contentV!, model: contentVm, showFirst: false)
+        TaskUtils.loadData(executeBody: contentVm.loadData, transponder: ContentDataLoader(container: contentV!, model: contentVm, showFirst: false)
                 .onCreateView { loader, view in
                     self.contentView = (view as! ContentDataView)
                 }
@@ -60,7 +60,7 @@ class ContentDataView: BaseView {
         vm = (model as! ContentDataVM)
         contentLB.text = vm.content
 
-        TaskUtils.loadData(executeBody: vm.loadData(), transponder: DialogProcesser().setOnSuccess { processer in
+        TaskUtils.loadData(executeBody: vm.loadData, transponder: DialogProcesser().setOnSuccess { processer in
             print("处理完了")
         })
     }
@@ -69,12 +69,10 @@ class ContentDataView: BaseView {
 class ContentDataVM: BaesVM {
     var content: String = "加载成功的内容"
 
-    func loadData() -> (LoadDataUiTask) -> Void {
-        return provideExecuteBody { task in
-            task.notifyStart(tipData: "正在加载...")
-            sleep(2)
-            task.notifySuccess(tipData: "加载成功")
-        }
+    func loadData(task: LoadDataUiTask) {
+        task.notifyStart(tipData: "正在加载...")
+        sleep(2)
+        task.notifySuccess(tipData: "加载成功")
     }
     
     override func getViewType() -> UIView.Type {
