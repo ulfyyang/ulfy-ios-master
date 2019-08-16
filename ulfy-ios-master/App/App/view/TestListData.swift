@@ -25,7 +25,7 @@ class TestListDataController: TitleContentController {
     }
 
     func initContent() {
-        TaskUtils.loadData(executeBody: contentVm.loadData, transponder: ContentDataLoader(container: contentV!, model: contentVm, showFirst: false)
+        TaskUtils.loadData(taskInfo: contentVm.taskInfo, loadSimplePage: contentVm.loadData, transponder: ContentDataLoader(container: contentV!, model: contentVm, showFirst: false)
                 .onCreateView { loader, view in
                     self.contentView = (view as! TestListDataView)
                 }
@@ -61,7 +61,7 @@ class TestListDataView: BaseView {
     }
 
     private func initView() {
-        refresher = TaskUtils.configLoadDataRefresh(tableView: self.dataTV) { refresher in
+        refresher = TaskUtils.configLoadListPageRefresh(tableView: self.dataTV) { refresher in
             UiUtils.show(message: "刷新了...")
             self.dataTV.reloadData()
         }
@@ -73,8 +73,8 @@ class TestListDataView: BaseView {
 
     override func bind(model: IViewModel) {
         vm = (model as! TestListDataVM)
-        refresher.updateExecuteBody(executeBody: vm.loadData)
-        loader.updateExecuteBody(executeBody: vm.loadMore)
+        refresher.updateExecuteBody(taskInfo: vm.taskInfo, loadSimplePage: vm.loadData)
+        loader.updateExecuteBody(taskInfo: vm.taskInfo, loadSimplePage: vm.loadData)
         dataSource.bindUITableView(tableView: dataTV, supportCellType: TestListDataCell.self)
         dataSource.setOnItemClickListener { tableView, indexPath, cm in
             UiUtils.show(message: "点击了\(indexPath.row)")
@@ -85,26 +85,19 @@ class TestListDataView: BaseView {
 
 class TestListDataVM: BaesVM {
     var cmList = NSMutableArray()
-    
-    func loadData(task: LoadDataUiTask) {
-        task.notifyStart(tipData: "正在加载...")
-        self.cmList.removeAllObjects()
-        for _ in 1...25 {
-            self.cmList.add(TestListDataCM())
-        }
-        sleep(2)
-        task.notifySuccess(tipData: "加载成功")
+    var taskInfo: LoadListPageUiTask.LoadListPageUiTaskInfo
+
+    override init() {
+        taskInfo = LoadListPageUiTask.LoadListPageUiTaskInfo(dataList: cmList)
     }
 
-    func loadMore(task: LoadDataUiTask) {
-        task.notifyStart(tipData: "正在加载...")
-        for _ in 0..<10 {
-            self.cmList.add(TestListDataCM())
+    func loadData(task: LoadListPageUiTask, dataList: NSMutableArray, tempList: NSMutableArray, page: Int, pageSize: Int) {
+        for index in 1...pageSize {
+            tempList.add(TestListDataCM(content: "当前页：\(page) 页大小：\(pageSize) 所在位置：\(index)"))
         }
         sleep(2)
-        task.notifySuccess(tipData: "加载成功")
     }
-    
+
     override func getViewType() -> UIView.Type {
         return TestListDataView.self
     }
@@ -121,7 +114,11 @@ class TestListDataCell: BaseCell {
 }
 
 class TestListDataCM: BaseCM {
-    var content: String = "这是测试内容"
+    var content: String
+
+    init(content: String) {
+        self.content = content
+    }
 
     override func getViewType() -> UIView.Type {
         return TestListDataCell.self

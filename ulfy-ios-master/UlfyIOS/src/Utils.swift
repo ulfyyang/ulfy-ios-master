@@ -84,15 +84,24 @@ public class TaskUtils {
         TaskExecutor.defaultExecutor.post(task: LoadDataUiTask(executeBody: executeBody, transponder: transponder))
     }
 
+    public static func loadData(taskInfo: LoadListPageUiTask.LoadListPageUiTaskInfo, loadSimplePage: ((LoadListPageUiTask, NSMutableArray, NSMutableArray, Int, Int) -> Void)?, transponder: Transponder) {
+        let loadListPageUiTask = LoadListPageUiTask(taskInfo: taskInfo, loadSimplePage: loadSimplePage, transponder: transponder)
+        TaskExecutor.defaultExecutor.post(task: NetUiTask(proxyTask: loadListPageUiTask, transponder: transponder))
+    }
 
-    /// 配置一个Smart的普通任务下拉刷新
+    /// 配置一个MJRefresh的普通任务下拉刷新
     public static func configLoadDataRefresh(tableView: UITableView, onRefreshSuccessListener: ((MJRefresher) -> Void)?) -> MJRefresher {
         return MJRefresher(tableView: tableView, onRefreshSuccessListener: onRefreshSuccessListener).buildLoadDataRefresher();
     }
 
-    /// 配置一个Smart的上拉加载
+    /// 配置一个MJRefresh的分页任务下拉刷新
+    public static func configLoadListPageRefresh(tableView: UITableView, onRefreshSuccessListener: ((MJRefresher) -> Void)?) -> MJRefresher {
+        return MJRefresher(tableView: tableView, onRefreshSuccessListener: onRefreshSuccessListener).buildLoadListPageRefresher();
+    }
+
+    /// 配置一个MJRefresh的上拉加载
     public static func configLoadListPageLoader(tableView: UITableView, onLoadSuccessListener: ((MJLoader) -> Void)?) -> MJLoader {
-        return MJLoader(tableView: tableView, onLoadSuccessListener: onLoadSuccessListener).buildLoadDataRefresher()
+        return MJLoader(tableView: tableView, onLoadSuccessListener: onLoadSuccessListener)
     }
     
 }

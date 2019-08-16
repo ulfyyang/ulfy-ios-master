@@ -12,6 +12,7 @@ public class MJRefresher: Transponder {
     private var tableView: UITableView
     private var netUiTask: NetUiTask!
     private var loadDataUiTask: LoadDataUiTask!
+    private var loadListPageUiTask: LoadListPageUiTask!
     private var taskExecutor: TaskExecutor?
     private var onRefreshSuccessListener: ((MJRefresher) -> Void)?
 
@@ -38,6 +39,9 @@ public class MJRefresher: Transponder {
     }
     
     @objc private func onRefreshData() {
+        if (loadListPageUiTask != nil) {
+            loadListPageUiTask.getTaskInfo().loadStartPage()
+        }
         if (taskExecutor == nil) {
             TaskExecutor.defaultConcurrentTaskExecutor.post(task: netUiTask)
         } else {
@@ -51,10 +55,22 @@ public class MJRefresher: Transponder {
         return self
     }
 
+    func buildLoadListPageRefresher() -> MJRefresher {
+        loadListPageUiTask = LoadListPageUiTask(taskInfo: nil, loadSimplePage: nil, transponder: self)
+        netUiTask = NetUiTask(proxyTask: loadListPageUiTask, transponder: self)
+        return self
+    }
+
     public func updateExecuteBody(executeBody: ((LoadDataUiTask) -> Void)?) {
         loadDataUiTask.setExecuteBody(executeBody: executeBody)
     }
 
+    public func updateExecuteBody(taskInfo: LoadListPageUiTask.LoadListPageUiTaskInfo, loadSimplePage: ((LoadListPageUiTask, NSMutableArray, NSMutableArray, Int, Int) -> Void)?) -> MJRefresher {
+        loadListPageUiTask.setTaskInfo(taskInfo: taskInfo)
+        loadListPageUiTask.setLoadSimplePage(loadSimplePage: loadSimplePage)
+        return self
+    }
+    
     public func setTaskExecutor(taskExecutor: TaskExecutor) -> MJRefresher {
         self.taskExecutor = taskExecutor
         return self
@@ -89,7 +105,7 @@ public class MJRefresher: Transponder {
 public class MJLoader: Transponder {
     private var tableView: UITableView
     private var netUiTask: NetUiTask!
-    private var loadDataUiTask: LoadDataUiTask!
+    private var loadListPageUiTask: LoadListPageUiTask!
     private var taskExecutor: TaskExecutor?
     private var onLoadSuccessListener: ((MJLoader) -> Void)?
 
@@ -97,6 +113,8 @@ public class MJLoader: Transponder {
         self.tableView = tableView
         self.onLoadSuccessListener = onLoadSuccessListener
         super.init()
+        self.loadListPageUiTask = LoadListPageUiTask(taskInfo: nil, loadSimplePage: nil, transponder: self)
+        self.netUiTask = NetUiTask(proxyTask: loadListPageUiTask, transponder: self)
         self.initSetting()
     }
 
@@ -113,6 +131,9 @@ public class MJLoader: Transponder {
     }
 
     @objc private func onLoadData() {
+        if (loadListPageUiTask != nil) {
+            loadListPageUiTask.getTaskInfo().loadNextPage()
+        }
         if (taskExecutor == nil) {
             TaskExecutor.defaultConcurrentTaskExecutor.post(task: netUiTask)
         } else {
@@ -120,14 +141,9 @@ public class MJLoader: Transponder {
         }
     }
 
-    func buildLoadDataRefresher() -> MJLoader {
-        loadDataUiTask = LoadDataUiTask(executeBody: nil, transponder: self)
-        netUiTask = NetUiTask(proxyTask: loadDataUiTask, transponder: self)
-        return self
-    }
-
-    public func updateExecuteBody(executeBody: ((LoadDataUiTask) -> Void)?) {
-        loadDataUiTask.setExecuteBody(executeBody: executeBody)
+    public func updateExecuteBody(taskInfo: LoadListPageUiTask.LoadListPageUiTaskInfo, loadSimplePage: ((LoadListPageUiTask, NSMutableArray, NSMutableArray, Int, Int) -> Void)?) {
+        loadListPageUiTask.setTaskInfo(taskInfo: taskInfo)
+        loadListPageUiTask.setLoadSimplePage(loadSimplePage: loadSimplePage)
     }
 
     public func setTaskExecutor(taskExecutor: TaskExecutor) -> MJLoader {
