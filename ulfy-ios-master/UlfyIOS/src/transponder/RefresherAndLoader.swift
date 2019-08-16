@@ -6,6 +6,8 @@
 import Foundation
 import MJRefresh
 
+/// 下拉刷新器
+/// 支持组件：UIScrollView、UITableView、UICollectionView、UIWebView
 public class MJRefresher: Transponder {
     private var tableView: UITableView
     private var netUiTask: NetUiTask!
