@@ -14,7 +14,8 @@ end
 
 target 'UlfyIOS' do
   project 'UlfyIOS/UlfyIOS.xcodeproj'
-  pod 'SnapKit', '~> 4.0'
-  pod 'MJRefresh'
-  pod 'HandyJSON', '~> 5.0.0'
+  pod 'SnapKit', '~> 4.0'               # AutoLayout代码布局库
+  pod 'MJRefresh'                       # 下拉刷新上拉加载库
+  pod 'HandyJSON', '~> 5.0.0'           # JSON解析库
+  pod 'Toast-Swift', '~> 5.0.0'         # 吐司提示库
 end

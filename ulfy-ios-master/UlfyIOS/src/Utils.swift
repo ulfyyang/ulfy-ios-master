@@ -62,9 +62,23 @@ class DialogRepository {
     }
 }
 
+import Toast_Swift
+
 public class DialogUtils {
     public static let ULFY_MAIN_DIALOG_ID = "__ULFY_MAIN_DIALOG_ID__"
 
+    /// 显示一个加载弹窗
+    public static func showLoadingDialog() {
+        let currentView = UiUtils.currentViewController()?.view
+        currentView?.makeToastActivity(.center)
+    }
+
+    /// 关闭加载弹窗
+    public static func dismissLoadingDialog() {
+        let currentView = UiUtils.currentViewController()?.view
+        currentView?.hideToastActivity()
+    }
+    
     public static func showDialog() {
         Dialog(dialogId: ULFY_MAIN_DIALOG_ID).show()
     }
@@ -119,15 +133,23 @@ extension UIView {
     }
 }
 
+import Toast_Swift
+
 public class UiUtils {
 
     /// 显示吐司：支持View和常规对象
     /// 如果是View则以View原本的样式显示
     /// 如果是常规对象则以toString的样式显示
     public static func show(message: Any) {
-        print(message)
+        let currentView = currentViewController()?.view
+        if (message is UIView) {
+            (message as! UIView).removeFromSuperview()
+            currentView?.showToast(message as! UIView)
+        } else {
+            currentView?.makeToast((message as! String))
+        }
     }
-    
+
     /// 将一个View填充到容器中，该容器中只会有一个View
     public static func displayViewOnContainer(view: UIView, container: UIView) {
         container.subviews.forEach { view in view.removeFromSuperview() }
@@ -147,6 +169,20 @@ public class UiUtils {
         nibView.snp.makeConstraints { maker in
             maker.size.equalTo(uiView)
         }
+    }
+
+    /// 获取当前课件的视图控制器，该方法必须在控制器课件时才能获取。如果在应用刚启动的时候是无法获取的
+    public static func currentViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        if let nav = base as? UINavigationController {
+            return currentViewController(base: nav.visibleViewController)
+        }
+        if let tab = base as? UITabBarController {
+            return currentViewController(base: tab.selectedViewController)
+        }
+        if let presented = base?.presentedViewController {
+            return currentViewController(base: presented)
+        }
+        return base
     }
 
     /// 根据View获取该View所属的ViewController

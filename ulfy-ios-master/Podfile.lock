@@ -3,12 +3,14 @@ PODS:
   - HandyJSON (5.0.0)
   - MJRefresh (3.2.0)
   - SnapKit (4.2.0)
+  - Toast-Swift (5.0.0)
 
 DEPENDENCIES:
   - Alamofire (= 4.8.2)
   - HandyJSON (~> 5.0.0)
   - MJRefresh
   - SnapKit (~> 4.0)
+  - Toast-Swift (~> 5.0.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -16,13 +18,15 @@ SPEC REPOS:
     - HandyJSON
     - MJRefresh
     - SnapKit
+    - Toast-Swift
 
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   HandyJSON: 992f2d661716d6a91de82d0056927bc7813b5770
   MJRefresh: ed450d6eb9d3346a2cb033ab7eb6de090aeef437
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
+  Toast-Swift: 36f4720243c8582c2be243a60a51e193c761f541
 
-PODFILE CHECKSUM: 4fa42143debd79dc7c13225adde72579a57b450c
+PODFILE CHECKSUM: 7334881adff98b0ca42dbc96fac999515c544c8f
 
 COCOAPODS: 1.7.5

@@ -13,7 +13,7 @@ class HttpUtils {
             // 模拟网络异步调用
             DispatchQueue.global().async {
                 sleep(2)
-                if (true) {
+                if (false) {
                     fulture.error(error: NSError(domain: "加载失败", code: 100))
                 } else {
                     fulture.success(data: "加载成功的数据")

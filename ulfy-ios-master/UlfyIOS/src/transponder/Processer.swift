@@ -19,7 +19,8 @@ public class DialogProcesser: Transponder {
     }
 
     override func onStart(data: Any) {
-        DialogUtils.showDialog()
+        UiUtils.currentViewController()?.view.isUserInteractionEnabled = false
+        DialogUtils.showLoadingDialog()
     }
 
     override func onFail(data: Any) {
@@ -35,7 +36,8 @@ public class DialogProcesser: Transponder {
     }
 
     override func onFinish(data: Any) {
-        DialogUtils.dismissDialog()
+        UiUtils.currentViewController()?.view.isUserInteractionEnabled = true
+        DialogUtils.dismissLoadingDialog()
     }
 
     public func setOnFail(onFail: @escaping (DialogProcesser) -> Void) -> DialogProcesser {

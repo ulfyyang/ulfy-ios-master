@@ -11,6 +11,8 @@ import UlfyIOS
 import Alamofire
 import HandyJSON
 
+import Toast_Swift
+
 class ViewController: UIViewController {
 
     class BasicTypes: HandyJSON {
@@ -20,9 +22,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        CacheUtils.cache(object: BasicTypes())
-        let object = CacheUtils.getCache(clazz: BasicTypes.self)!
-        print(object.int!)
     }
     
     @IBAction func clickContentDataBT(_ sender: Any) {
