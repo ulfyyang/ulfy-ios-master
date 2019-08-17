@@ -193,3 +193,186 @@ public class UiUtils {
         }
     }
 }
+
+/// File工具类
+public class FileUtils {
+    /// 删除文件或者文件夹
+    public static func delete(directory: String, keepRoot: Bool = true) {
+        let enumerator = FileManager.default.enumerator(atPath: directory)!
+        while let element = enumerator.nextObject() as? String {
+            try! FileManager.default.removeItem(atPath: element)
+        }
+        if (!keepRoot) {
+            try! FileManager.default.removeItem(atPath: directory)
+        }
+    }
+}
+
+import HandyJSON
+
+public protocol ICache {
+    func isCached<T: HandyJSON>(clazz: T.Type) -> Bool
+    func cache<T: HandyJSON>(object: T) -> T
+    func getCache<T: HandyJSON>(clazz: T.Type) -> T?
+    func deleteCache(clazz: AnyClass)
+    func deleteAllCache()
+}
+
+public class MemoryCache: ICache {
+    private var objectDirectory: [String: AnyObject] = [:]
+
+    public func isCached<T: HandyJSON>(clazz: T.Type) -> Bool {
+        return objectDirectory[NSStringFromClass(clazz as! AnyClass)] != nil
+    }
+
+    public func cache<T: HandyJSON>(object: T) -> T {
+        objectDirectory[NSStringFromClass(type(of: object) as! AnyClass)] = object as AnyObject
+        return object
+    }
+
+    public func getCache<T: HandyJSON>(clazz: T.Type) -> T? {
+        return objectDirectory[NSStringFromClass(clazz as! AnyClass)] as? T
+    }
+
+    public func deleteCache(clazz: AnyClass) {
+        objectDirectory.removeValue(forKey: NSStringFromClass(clazz))
+    }
+
+    public func deleteAllCache() {
+        objectDirectory.removeAll()
+    }
+}
+
+public class DiskCache: ICache {
+
+    public func isCached<T: HandyJSON>(clazz: T.Type) -> Bool {
+        return getCache(clazz: clazz) != nil
+    }
+
+    public func cache<T: HandyJSON>(object: T) -> T {
+        cacheInner(object: object, haveTryed: false)
+        return object
+    }
+
+    public func getCache<T: HandyJSON>(clazz: T.Type) -> T? {
+        return getCacheInner(clazz: clazz)
+    }
+
+    public func deleteCache(clazz: AnyClass) {
+        let cacheFile = CacheConfig.getLocalEntityCacheDir() + "/" + NSStringFromClass(clazz)
+        try! FileManager.default.removeItem(atPath: cacheFile)
+    }
+
+    public func deleteAllCache() {
+        FileUtils.delete(directory: CacheConfig.getLocalEntityCacheDir())
+    }
+    
+    private func cacheInner<T: HandyJSON>(object: T, haveTryed: Bool) {
+        let cacheFile = CacheConfig.getLocalEntityCacheDir() + "/" + NSStringFromClass(type(of: object) as! AnyClass)
+        do {
+            let content = object.toJSONString()!
+            if (!FileManager.default.createFile(atPath: cacheFile, contents: content.data(using: String.Encoding.utf8)!)) {
+                throw NSError(domain: "文件创建失败", code: Envirnment.CODE_CREATE_FILE_FAIL)
+            }
+        } catch {
+            print(error)
+            deleteCache(clazz: type(of: object) as! AnyClass)
+            cacheInner(object: object, haveTryed: true)
+        }
+    }
+    
+    private func getCacheInner<T: HandyJSON>(clazz: T.Type) -> T? {
+        let cacheFile = CacheConfig.getLocalEntityCacheDir() + "/" + NSStringFromClass(clazz as! AnyClass)
+        if (FileManager.default.fileExists(atPath: cacheFile)) {
+            do {
+                if let readHandler = FileHandle(forReadingAtPath: cacheFile) {
+                    let content = String(data: readHandler.readDataToEndOfFile(), encoding: String.Encoding.utf8)
+                    return clazz.deserialize(from: content)!
+                } else {
+                    throw NSError(domain: "实体解析失败", code: Envirnment.CODE_DESERIALIZE_JSON_FAIL)
+                }
+            } catch {
+                print(error)
+                deleteCache(clazz: clazz as! AnyClass)
+                return nil
+            }
+        } else {
+            return nil
+        }
+    }
+}
+
+public class MemoryDiskCache: ICache {
+    private let memoryCache: ICache
+    private let diskCache: ICache
+
+    public init(memoryCache: ICache, diskCache: ICache) {
+        self.memoryCache = memoryCache
+        self.diskCache = diskCache
+    }
+
+    public func isCached<T: HandyJSON>(clazz: T.Type) -> Bool {
+        return memoryCache.isCached(clazz: clazz) || diskCache.isCached(clazz: clazz)
+    }
+
+    public func cache<T: HandyJSON>(object: T) -> T {
+        memoryCache.cache(object: object)
+        diskCache.cache(object: object)
+        return object
+    }
+
+    public func getCache<T: HandyJSON>(clazz: T.Type) -> T? {
+        if (memoryCache.isCached(clazz: clazz)) {
+            return memoryCache.getCache(clazz: clazz)
+        } else {
+            let object = diskCache.getCache(clazz: clazz)
+            if (object != nil) {
+                memoryCache.cache(object: object!)
+            }
+            return object
+        }
+    }
+
+    public func deleteCache(clazz: AnyClass) {
+        memoryCache.deleteCache(clazz: clazz)
+        diskCache.deleteCache(clazz: clazz)
+    }
+
+    public func deleteAllCache() {
+        memoryCache.deleteAllCache()
+        diskCache.deleteAllCache()
+    }
+}
+
+/// 缓存工具类
+/// 默认使用的内存硬盘双重缓存
+public class CacheUtils {
+    public static let defaultMemoryCache = MemoryCache()        /// 获取默认的内存缓存
+    public static let defaultDiskCache = DiskCache()            /// 获取默认的硬盘缓存
+    public static let defaultMemoryDiskCache = MemoryDiskCache(memoryCache: defaultMemoryCache, diskCache: defaultDiskCache)        /// 获取内存硬盘双重缓存
+
+    /// 判断一个对象是否被缓存了
+    public static func isCached<T: HandyJSON>(clazz: T.Type) -> Bool {
+        return defaultMemoryDiskCache.isCached(clazz: clazz)
+    }
+
+    /// 缓存一个对象
+    public static func cache<T: HandyJSON>(object: T) -> T {
+        return defaultMemoryDiskCache.cache(object: object)
+    }
+
+    /// 取出一个缓存对象
+    public static func getCache<T: HandyJSON>(clazz: T.Type) -> T? {
+        return defaultMemoryDiskCache.getCache(clazz: clazz)
+    }
+
+    /// 删除缓存对象
+    public static func deleteCache(clazz: AnyClass) {
+        defaultMemoryDiskCache.deleteCache(clazz: clazz)
+    }
+
+    /// 删除所有缓存对象
+    public static func deleteAllCache() {
+        defaultMemoryDiskCache.deleteAllCache()
+    }
+}

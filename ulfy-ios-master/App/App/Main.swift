@@ -9,11 +9,20 @@
 import UIKit
 import UlfyIOS
 import Alamofire
+import HandyJSON
 
 class ViewController: UIViewController {
 
+    class BasicTypes: HandyJSON {
+        var int: Int!
+        required init() {}
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+//        CacheUtils.cache(object: BasicTypes())
+        let object = CacheUtils.getCache(clazz: BasicTypes.self)!
+        print(object.int!)
     }
     
     @IBAction func clickContentDataBT(_ sender: Any) {
