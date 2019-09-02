@@ -212,7 +212,7 @@ public class UiUtils {
     /// -identifier     控制器的唯一标识
     /// -type           控制器的类型
     static func createViewControllerByStoryBoardForFramework(name: String, identifier: String?) -> UIViewController {
-        return createViewControllerByStoryBoard(name: name, identifier: identifier, bundle: Bundle(identifier: Envirnment.BUNDLE_ID))
+        return createViewControllerByStoryBoard(name: name, identifier: identifier, bundle: Bundle(identifier: Environment.BUNDLE_ID))
     }
 
     /// 根据StoryBoard的名字获取对应的控制器
@@ -308,7 +308,7 @@ public class DiskCache: ICache {
         do {
             let content = object.toJSONString()!
             if (!FileManager.default.createFile(atPath: cacheFile, contents: content.data(using: String.Encoding.utf8)!)) {
-                throw NSError(domain: "文件创建失败", code: Envirnment.CODE_CREATE_FILE_FAIL)
+                throw NSError(domain: "文件创建失败", code: Environment.CODE_CREATE_FILE_FAIL)
             }
         } catch {
             print(error)
@@ -325,7 +325,7 @@ public class DiskCache: ICache {
                     let content = String(data: readHandler.readDataToEndOfFile(), encoding: String.Encoding.utf8)
                     return clazz.deserialize(from: content)!
                 } else {
-                    throw NSError(domain: "实体解析失败", code: Envirnment.CODE_DESERIALIZE_JSON_FAIL)
+                    throw NSError(domain: "实体解析失败", code: Environment.CODE_DESERIALIZE_JSON_FAIL)
                 }
             } catch {
                 print(error)

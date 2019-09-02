@@ -5,7 +5,8 @@
 
 import Foundation
 
-class Envirnment {
+/// 总环境配置
+class Environment {
     static let BUNDLE_ID: String = "com.ulfy.UlfyIOS"       // 唯一标识ID
     static let LOADING_STORY_BOARD = "Loading"              // 加载中默认相关页面
     static let LOADING_VIEW_CONTROLLER = "Loading"          // 加载中控制器
@@ -16,6 +17,7 @@ class Envirnment {
 
 /// 框架总配置
 public class UlfyConfig {
+    /// 响应器配置
     public class TransponderConfig {
         public static var contentDataLoaderConfig: ContentDataLoaderConfig = DefaultContentDataLoaderConfig()
     }
@@ -33,11 +35,12 @@ class CacheConfig {
 
 /// 内容加载器配置
 public protocol ContentDataLoaderConfig {
-    func getNetErrorView() -> ReloadView
-    func getFailView() -> ReloadView
-    func getLoadingView() -> TipView
+    func getNetErrorView() -> ReloadView        /// 网络错误显示的页面
+    func getFailView() -> ReloadView            /// 加载失败显示的页面
+    func getLoadingView() -> TipView            /// 加载中显示的页面
 }
 
+/// 默认的内容加载器配置
 public class DefaultContentDataLoaderConfig: ContentDataLoaderConfig {
     public func getNetErrorView() -> ReloadView {
         return ContentDataLoaderFailedView()
