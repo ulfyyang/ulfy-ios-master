@@ -19,6 +19,88 @@ public protocol ReloadView {
     func setOnReloadListener(onReload: (() -> Void)?)
 }
 
+/// 内容加载器，该加载器会在页面的指定位置上进行操作
+public class ContentDataLoader : Transponder {
+    private var container: UIView                                       // 执行过程中操作的容器
+    private var model: IViewModel                                       // 当任务执行成功后使用的数据模型
+    private var view: UIView!                                           // 执行成功后保留的View，保留是为了尽可能的复用
+    private var showFirst: Bool                                         // 是否有限显示出来
+    private var contentDataLoaderConfig: ContentDataLoaderConfig        // 表现配置
+    private var onCreateView: ((ContentDataLoader, UIView) -> Void)?    // 当View被创建时的回调
+    private var onReload: (() -> Void)?                                 // 点击重试执行的操作
+
+    public init(container: UIView, model: IViewModel, showFirst: Bool) {
+        self.container = container
+        self.model = model
+        self.showFirst = showFirst
+        self.contentDataLoaderConfig = UlfyConfig.TransponderConfig.contentDataLoaderConfig
+        super.init()
+        if (showFirst) {
+            view = model.getViewType().init()
+            onCreateView?(self, view)
+            UiUtils.displayViewOnContainer(view: view, container: container)
+        }
+    }
+
+    public final func setContentDataLoaderConfig(contentDataLoaderConfig: ContentDataLoaderConfig) -> ContentDataLoader {
+        self.contentDataLoaderConfig = contentDataLoaderConfig
+        return self
+    }
+
+    override func onNetError(data: Any) {
+        let netErrorView: ReloadView = contentDataLoaderConfig.getNetErrorView()
+        netErrorView.setOnReloadListener(onReload: onReload)
+        if (netErrorView is TipView) {
+            (netErrorView as! TipView).setTipMessage(message: data)
+        }
+        UiUtils.displayViewOnContainer(view: netErrorView as! UIView, container: container)
+    }
+
+    override func onStart(data: Any) {
+        if (!showFirst) {
+            let loadingView: TipView = contentDataLoaderConfig.getLoadingView()
+            loadingView.setTipMessage(message: data)
+            UiUtils.displayViewOnContainer(view: loadingView as! UIView, container: container)
+        }
+    }
+
+    override func onSuccess(data: Any) {
+        if (showFirst) {
+            (view as! IView).bind(model: model)
+        } else {
+            view = model.getViewType().init()
+            onCreateView?(self, view)
+            (view as! IView).bind(model: model)
+            UiUtils.displayViewOnContainer(view: view, container: container)
+        }
+    }
+
+    override func onFail(data: Any) {
+        let failView: ReloadView = contentDataLoaderConfig.getFailView()
+        failView.setOnReloadListener(onReload: onReload)
+        if (failView is TipView) {
+            (failView as! TipView).setTipMessage(message: data)
+        }
+        UiUtils.displayViewOnContainer(view: failView as! UIView, container: container)
+    }
+
+    public final func getView() -> UIView {
+        return self.view
+    }
+
+    /// 当View被创建时的回调
+    public final func onCreateView(onCreateView: @escaping (ContentDataLoader, UIView) -> Void) -> ContentDataLoader {
+        self.onCreateView = onCreateView
+        return self
+    }
+
+    /// 设置重试操作
+    public final func setOnReloadListener(onReload: (() -> Void)?) -> ContentDataLoader {
+        self.onReload = onReload
+        return self
+    }
+}
+
 /// 当加载页面正在加载中时显示的界面
 class ContentDataLoaderLoadingView: UIView, TipView {
     private var messageLabel: UILabel?              // 显示提示消息的标签
