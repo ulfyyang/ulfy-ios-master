@@ -36,11 +36,9 @@ class TestListDataController: TitleContentController {
     }
 
     func initController() {
-
+        self.navigationItem.title = "列表展示演示"
     }
 }
-
-import MJRefresh
 
 /// 注意，不要使用和系统命名接近的命名，如TableView，这样很容易造成崩溃
 class TestListDataView: BaseView {

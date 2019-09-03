@@ -33,7 +33,7 @@ class MainController: TitleContentController {
     }
 
     func initController() {
-
+        navigationBarHidden = true
     }
 }
 

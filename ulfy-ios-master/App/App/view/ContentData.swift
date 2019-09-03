@@ -34,7 +34,7 @@ class ContentDataController: TitleContentController {
     }
 
     func initController() {
-
+        self.navigationItem.title = "内容加载演示"
     }
 }
 
