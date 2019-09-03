@@ -83,7 +83,7 @@ class TestListDataView: BaseView {
     }
 }
 
-class TestListDataVM: BaesVM {
+class TestListDataVM: BaseVM {
     var cmList = NSMutableArray()
     var taskInfo: LoadListPageUiTask.LoadListPageUiTaskInfo
 

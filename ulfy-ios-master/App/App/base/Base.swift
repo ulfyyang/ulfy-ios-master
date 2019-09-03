@@ -10,7 +10,7 @@ class BaseController: UlfyBaseController { }
 
 class BaseView: UlfyBaseNibView { }
 
-class BaesVM: UlfyBaseVM { }
+class BaseVM: UlfyBaseVM { }
 
 class BaseCell: UlfyBaseNibCell { }
 

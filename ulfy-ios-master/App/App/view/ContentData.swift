@@ -66,7 +66,7 @@ class ContentDataView: BaseView {
     }
 }
 
-class ContentDataVM: BaesVM {
+class ContentDataVM: BaseVM {
     var content: String = "加载成功的内容"
 
     func loadData(task: LoadDataUiTask) {
